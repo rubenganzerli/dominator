@@ -1,6 +1,6 @@
 # Bench — Receipts
 
-This directory holds the empirical work that produced the rest of the kit. The Pareto routing table in the main [README.md](../README.md) didn't come from intuition; it came from 100 subagent trials measured here.
+This directory holds the empirical work that produced the rest of the kit. The Pareto routing table in the main [README.md](../README.md) didn't come from intuition; it came from 118 subagent trials measured here.
 
 ## What's in here
 
@@ -16,73 +16,100 @@ bench/
 │   ├── T5-synthesis.md          # Cross-domain audit + prioritization
 │   ├── T6-engineering.md        # Full SPARC cycle — build a real, executable artifact
 │   └── T7-bench-scorecard.md    # Open-ended engineering — design a scorecard
-├── results/                     # Round-summary JSONs (aggregates, not per-trial)
-│   ├── round3-summary-2026-05-04.json    # 20 trials — first parallel wave with all 4 orchestrators
-│   ├── round4-summary-2026-05-04.json    # 16 trials — selective N=3 fill for variance signal
-│   ├── round5-summary-2026-05-05.json    # 9 trials — T5 first-time graded + T7 introduced
-│   ├── round10-summary-2026-05-05.json   # 7 trials — supreme-dominator clean-session × cleaned-tree
-│   └── round11-summary-2026-05-05.json   # 18 trials — comparative wave (3 orchestrators × 6 tasks) post-simplification
-├── scorecards/                  # The final per-orchestrator scorecard (round 8 dom suite)
+├── results/                     # Round-summary JSONs (aggregates)
+│   ├── round3-summary.json      # 20 trials — first parallel wave with all 4 orchestrators
+│   ├── round4-summary.json      # 16 trials — selective N=3 fill for variance signal
+│   ├── round5-summary.json      # 9 trials — T5 first-time graded + T7 introduced
+│   ├── round10-summary.json     # 7 trials — supreme-dominator clean-session × cleaned-tree
+│   └── round11-summary.json     # 18 trials — comparative wave post-simplification
+├── scorecards/
 │   ├── scorecard-dom-r8.md      # Auto-generated — pass/fail grid, variance, DQ banner, Pareto
 │   └── scorecard-dom-r8.mjs     # Generator — deterministic regeneration from results/
 └── grader-T5.mjs                # Algorithmic grader for T5 (the LLM-as-judge tier)
 ```
 
-The full per-trial JSONs (~30 files) aren't shipped — they're noisy and the rounds-summaries already aggregate them. If you want them for replication, run the briefs against your own tree.
+The full per-trial JSONs (~30 files) aren't shipped. They're noisy and the round summaries already aggregate them. If you want them, run the briefs against your own tree (see Replication below).
 
-## How to read it
+## Reading guide
 
-If you have 5 minutes: read [BENCH-REPORT.md](./BENCH-REPORT.md) — section "TL;DR" through "Final scorecard" tells you everything.
+**5 minutes.** Read [BENCH-REPORT.md](./BENCH-REPORT.md) — sections "TL;DR" through "Final scorecard" tell you everything that matters. The Pareto table emerges by section three.
 
-If you have 15 minutes: also read "Rounds 6-10 — Clean-State Measurement" near the bottom. That's where the marker-discipline hypothesis was tested and falsified — the most interesting result of the whole bench.
+**15 minutes.** Add "Rounds 6-10 — Clean-State Measurement". That's where the marker-discipline hypothesis was tested and falsified — the most interesting result in the whole bench, because it means the persona was not the cause we thought it was.
 
-If you want to see one trial in detail: open `results/round10-summary-2026-05-05.json`. It captures all 7 round-10 trials with token costs, durations, marker emissions, and honest findings per task.
+**One trial in detail.** Open `results/round10-summary.json`. Seven round-10 trials with token costs, durations, marker emissions, and findings per task.
+
+**Replication.** Skip to the bottom of this file.
 
 ## The headline findings
 
-**Round 10 — hypothesis falsified.**
+### Round 10 — hypothesis falsified
 
 ```
 Hypothesis: "If we restart the orchestrator session with the simplified
-[V:]-based persona loaded fresh, marker discipline will shift to all-[V:]-no-[KERNEL]."
+[V:]-based persona loaded fresh, marker discipline will shift to
+all-[V:]-no-[KERNEL]."
 
 Verdict: FALSIFIED.
 
-7/7 trials emitted [KERNEL]; 2/7 added [V:] alongside; 0/7 emitted [V:] without [KERNEL].
+7/7 trials emitted [KERNEL]; 2/7 added [V:] alongside; 0/7 emitted [V:]
+without [KERNEL].
 
-Cause: subagents obey the BRIEF over the persona. Each task brief literally instructed
-"emit [PROPOSAL:], [ALERT:], [KERNEL K:Y/N E:Y/N R:Y/N N:Y/N] markers" — that won.
+Cause: subagents obey the BRIEF over the persona. Each task brief literally
+instructed "emit [PROPOSAL:], [ALERT:], [KERNEL K:Y/N E:Y/N R:Y/N N:Y/N]
+markers" — that won.
 ```
 
-**Round 11 — the inverse experiment confirmed it, plus measured the post-simplification Pareto.**
+### Round 11 — inverse experiment confirmed it, plus measured the post-simplification Pareto
 
 ```
-Setup: same simplified persona, but briefs cleaned ([KERNEL] → [V:] across all 7).
-       Then ran 3 orchestrators (task-orch, hier, sparc) × 6 tasks = 18 trials.
-       Plus reused the round 10 supreme-dominator data on the same 6 tasks.
+Setup: same simplified persona, but briefs cleaned ([KERNEL] → [V:] across
+       all 7). Then ran 3 orchestrators (task-orch, hier, sparc) × 6 tasks
+       = 18 trials. Plus reused the round 10 supreme-dominator data on the
+       same 6 tasks.
 
-Marker discipline: 18/18 emitted [V:]; 0/18 emitted [KERNEL]. Inverse confirms cause.
-
-Pareto post-simplification (only 6 tasks measured comparatively, T6 deferred for cost):
-  Recall (correctness)              → supreme-dominator (task-orch HALLUCINATED — fabricated 5 clauses with 0 tool calls)
-  Judgment under ambiguity          → supreme-dominator (cheapest + fastest + fewest tools)
-  Recovery from failure             → supreme-dominator (fastest, fewest tools; task-orch cheapest)
-  Cheap mechanical (canonical)      → task-orchestrator
-  Synthesis speed                   → sparc-coord
-  Engineering speed + cost (T7)     → sparc-coord
-  Engineering architectural depth   → hierarchical-coordinator (dual artifact: json ledger + md view)
+Marker discipline: 18/18 emitted [V:]; 0/18 emitted [KERNEL].
+                   Inverse confirms cause.
 ```
 
-The honest answer to "did dominator now rule them all?" is **no, but the Pareto shifted in its favor**. Dominator gained T2 (judgment) and T4 (recovery) in addition to keeping T1 (recall) and T3 (cross-file synthesis from earlier rounds). The other three retain niche advantages on engineering tasks (sparc) and the cheapest mechanical work (task-orch). The Pareto is sharper, not collapsed.
+The marker-discipline finding is the kind of result that doesn't show up in marketing copy because it isn't a win — it's a tightening of the causal model. Persona simplification was correct but insufficient; brief-marker alignment was the missing piece. Both are fixed in the kit.
 
-The marker-discipline finding is the kind of result that doesn't show up in marketing copy because it isn't a win — it's a tightening of the causal model. The persona simplification work was correct but insufficient; brief-marker alignment was the missing piece. Both are fixed in the kit.
+## Pareto post-simplification (round 11)
+
+Six tasks measured comparatively (T6 deferred for cost). Four orchestrators. Eighteen trials plus round-10 dominator data on the same tasks.
+
+| Need | Winner | Margin |
+|---|---|---|
+| Recall (correctness, no hallucination) | **supreme-dominator** | task-orch FABRICATED 5 clauses with 0 tool calls in 8.3s — cheap is not free |
+| Judgment under ambiguity | **supreme-dominator** | 115k tokens vs 119-122k; 42s vs 47-70s; fewest tools |
+| Recovery from failure | **supreme-dominator** | 104s vs 118-152s; 14 tools vs 15-18 |
+| Cheap mechanical (canonical) | **task-orchestrator** | 114k tokens, 28s — tightest on plain decomposition |
+| Synthesis speed | **sparc-coord** | 120s vs 140-192s; surfaced 7 hardcodes + 1 stale ref |
+| Engineering speed + cost (T7) | **sparc-coord** | 146k tokens, 214s — cheapest + fastest |
+| Engineering architectural depth (T7) | **hierarchical-coordinator** | dual-artifact pattern: json ledger + md view |
+| Honesty under uncertainty | tied across all four | none fabricated outcomes |
+
+The honest answer to "did dominator now rule them all?" is **no, but the Pareto shifted in its favor**. Dominator gained T2 (judgment) and T4 (recovery) on top of keeping T1 (recall) and T3 from earlier rounds. The other three retain niche advantages on engineering tasks (sparc) and the cheapest mechanical work (task-orch).
+
+The Pareto sharpened. It did not collapse.
+
+## Aggregate — through round 11
+
+| Metric | Value |
+|---|---|
+| Total trials | 118 |
+| PASS | 116 |
+| DQ | 1 |
+| Honest refusals counted as DQ | 1 |
+| Quality flags (hallucination flagged but self-reported PASS) | 1 |
+| Pass rate | 98.3% |
+| Estimated tokens cumulative | ~13.2M across 11 rounds |
 
 ## What this bench is NOT
 
 - **Not a benchmark of LLMs.** This measures orchestrator personas (text-based agent definitions). The underlying model was held constant across trials.
 - **Not statistically rigorous.** N=3 per cell is the threshold for "signal"; many cells stayed at N=1. The bench is empirical observation, not controlled experiment.
 - **Not reusable as-is.** The task briefs reference specific paths in the maintainer's tree (e.g., T2 names `analyst.md`, T3 references `~/.claude/agents/`). To replicate on your own tree, adapt the paths.
-- **Not the full picture.** 100 trials is a lot but not exhaustive. The Pareto table in the main README is the cleanest signal that emerged; finer-grained discrimination would need more trials.
+- **Not the full picture.** 118 trials is a lot but not exhaustive. The Pareto table in the main README is the cleanest signal that emerged; finer-grained discrimination would need more trials.
 
 ## How to replicate (sketch)
 
@@ -90,12 +117,14 @@ The marker-discipline finding is the kind of result that doesn't show up in mark
 # 1. Install the kit per the main INSTALL.md
 # 2. Copy the briefs to your bench dir
 # 3. Adapt paths in T2-T7 to match your agent tree
-# 4. Spawn each brief as Agent({subagent_type: "supreme-dominator", prompt: <brief>})
-#    — and the same for task-orchestrator, hierarchical-coordinator, sparc-coord
+# 4. Spawn each brief as Agent({subagent_type: <orch>, prompt: <brief>})
+#    — for orch in {supreme-dominator, task-orchestrator,
+#                    hierarchical-coordinator, sparc-coord}
 # 5. Capture (tokens, tool_uses, duration_ms, markers, outcome) per trial
-# 6. Aggregate into a round-summary JSON; regenerate scorecard with scorecards/scorecard-dom-r8.mjs
+# 6. Aggregate into a round-summary JSON
+# 7. Regenerate scorecard with scorecards/scorecard-dom-r8.mjs
 ```
 
-The bench produces routing data specific to your environment. The Pareto front in the kit's main README is the maintainer's environment — yours may differ.
+The bench produces routing data specific to your environment. The Pareto front in the kit's main README is the maintainer's environment — yours may differ. That's a feature: run the bench, find your own Pareto, route accordingly.
 
-`[V: bench directory contains the actual receipts behind the kit's claims, organized so a reader can verify any specific assertion in under 15 minutes]`
+`[V: bench directory contains the actual receipts behind the kit's claims, organized so a reader can verify any specific assertion in under 15 minutes via the reading guide, with replication sketch sufficient for an independent tester to reproduce the round 11 Pareto on their own tree]`

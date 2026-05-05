@@ -1,37 +1,44 @@
 # Dominator
 
-You spawned five subagents. Three came back with `[KERNEL K:Y E:Y R:Y N:Y]`, one with `[REFLECT]`, one with nothing. One stashed a sentinel directory inside your protected path and called it transient. None of them named what would actually prove the work done.
+You spawned five subagents. Three came back with `[KERNEL K:Y E:Y R:Y N:Y]`. One emitted `[REFLECT]` and stopped. One returned nothing. One stashed a sentinel directory inside your protected agents path and called it transient. None of them named what would actually prove the work was done.
 
 You can keep tuning prompts forever.
 
-Or you can install a discipline layer that turns every task into the same shape.
+Or you can install one discipline layer that turns every task into the same shape.
 
 ---
 
 ## What this is
 
-A `/dominator` slash command for Claude Code that gives every task a 4-phase structure (Draft → Devise → Decide), enforces a single marker contract across every spawned subagent, and ships an audit script that ratchets the contract so it can't quietly slip back.
+A `/dominator` slash command for Claude Code. It gives every task a 4-phase structure (Draft → Devise → Decide), enforces a single marker contract across every spawned subagent, and ships an audit script that ratchets the contract so it cannot quietly slip back.
+
+The persona names the success condition before doing anything else. Subagents inherit one protocol. Drift is caught by a script that exits non-zero in CI.
+
+---
+
+## What 4D looks like on a real task
 
 ```
-You: /dominator refactor the auth module to extract JWT verification
+You: /dominator extract JWT verification into its own service in the auth module
 
 → DRAFT
-  Task: extract JWT verification into its own service in ~/code/forge/auth/.
-  [V: src/auth/jwt-verifier.ts exists, 100% test coverage on the verify() path,
-       all 4 import sites updated, npm test green]
+  Task: extract JWT verification into a dedicated service file.
+  [V: src/auth/jwt-verifier.ts exists, 100% test coverage on verify(),
+       all 4 import sites updated, npm test exits 0]
 
 → DEVISE
-  Solo. One file split, four import sites — within working capacity.
-  No spawn needed.
+  Solo. One file split, four import sites. Within working capacity.
+  No spawn needed. Voice: declarative, landing-line.
 
 → DECIDE
-  [executes — reads, edits, runs tests, verifies V condition]
-  [V: src/auth/jwt-verifier.ts created (62 lines), tests/auth/jwt-verifier.test.ts
-      added (8 cases, all green), 4 imports updated in api/handlers/{login,refresh,
-      reset,session}.ts, npm test exit 0]
+  [reads existing auth.ts, writes jwt-verifier.ts, updates 4 imports,
+   runs npm test, checks exit code against V condition]
+  [V satisfied: jwt-verifier.ts created (62 lines), 8 test cases all green,
+       4 imports updated in api/handlers/{login,refresh,reset,session}.ts,
+       npm test exit 0 confirmed]
 ```
 
-Same structure every time. Every task gets a named success condition. Every spawn gets the protocol prepended. Every agent file in your tree carries one inheritance line — and an audit script catches it the moment that line drifts.
+Same structure every task. Every spawn gets the protocol prepended. Every agent file in the tree carries one inheritance line — and the audit script catches the moment that line drifts.
 
 ---
 
@@ -47,7 +54,7 @@ If you use Claude Code seriously, you spawn a lot of subagents. They drift. Spec
 | Sentinel paths in protected dirs | `__T6_DOM_R3__` inside `agents/core/` | Spawn-time enforcement clause documents this exact failure |
 | Inheritance drift | New agent file ships without protocol | `protocol-audit.mjs` ratchet — exits non-zero, breaks CI |
 
-This isn't theory. It's the residue of 100+ subagent trials in an internal bench. Each failure mode in that table was observed at least once. The kit is what closed each one.
+Each row was observed at least once across an internal bench of 118 subagent trials. The kit is what closed each one.
 
 ---
 
@@ -57,80 +64,75 @@ This isn't theory. It's the residue of 100+ subagent trials in an internal bench
 git clone https://github.com/YOUR_USERNAME/dominator.git
 cd dominator
 
-# Drop into ~/.claude/
 cp -r commands/* ~/.claude/commands/
 cp -r agents/*   ~/.claude/agents/
 cp -r scripts/*  ~/.claude/scripts/
 chmod +x ~/.claude/scripts/*.mjs
 
-# Personalize
 mv ~/.claude/agents/supreme-dominator.template.md ~/.claude/agents/supreme-dominator.md
-${EDITOR:-vim} ~/.claude/agents/supreme-dominator.md  # fill in your projects
+${EDITOR:-vim} ~/.claude/agents/supreme-dominator.md   # personalize routing table
 
-# Verify
-node ~/.claude/scripts/protocol-audit.mjs --broad   # exit 0 = clean
+node ~/.claude/scripts/protocol-audit.mjs --broad      # exit 0 = clean
 
-# Use
-# In Claude Code: /dominator <your task>
+# Then in Claude Code:  /dominator <your task>
 ```
 
-Full setup: [INSTALL.md](./INSTALL.md). It walks the routing-table fill-in, voice tweaks, and the watcher-as-background-service pattern.
+Full setup in [INSTALL.md](./INSTALL.md) — including the routing-table fill-in, watcher daemon, and troubleshooting.
 
 ---
 
-## What's in the box
+## What's in the kit
 
 ```
 .
 ├── commands/dominator.md              The /dominator slash command
 ├── agents/
 │   ├── supreme-dominator.template.md  The persona — invites you to fill it in
-│   ├── court-architecture.md          Stratega / Operativo / Guardiano role spec
+│   ├── court-architecture.md          Stratega / Operativo / Guardiano spec
 │   └── protocols/
 │       └── proactive-protocol.md      v3.0 — three clauses + V marker
 ├── scripts/
 │   ├── protocol-audit.mjs             Ratchet — non-zero on inheritance drift
 │   └── protocol-watch.mjs             Watcher — runs audit on every save
 ├── examples/routing-table.example.md  Four worked routing tables
+├── bench/                             Empirical receipts (see below)
 ├── INSTALL.md                         Step-by-step setup
 └── README.md                          You're reading it
 ```
 
-The persona ships with three named defaults — **The Forge** (where you build), **The Atlas** (where you learn), **The Salon** (where you present) — plus an Infrastructure row for meta-work. Keep them, rename them, or replace them. The defaults are evocative on purpose: they suggest a workshop with three rooms, and the user is the one who decides what each room contains.
+The persona ships with three named defaults — **The Forge** (where you build), **The Atlas** (where you learn), **The Salon** (where you present) — plus an Infrastructure row for meta-work. The metaphors are evocative on purpose. They suggest a workshop with three rooms; the user decides what each room contains. Rename them, replace them, or keep them and just point them at real paths.
 
 ---
 
 ## What this is NOT
 
-- **Not a magic router.** The persona has tables; you read them. Pareto-optimal orchestrator selection still requires your judgment — what the kit gives you is the structure to apply judgment in.
+- **Not a magic router.** The persona has tables; you read them. Pareto-optimal orchestrator selection still needs your judgment — what the kit gives is the structure to apply judgment in.
 - **Not a substitute for tests.** The V condition names what proves done; you still write the test that proves it.
 - **Not portable beyond Claude Code.** This is wired specifically to the Agent/Task tool semantics of the Claude Code CLI.
 - **Not opinionated about your stack.** Node, Python, Rust, Go, Elixir — the persona doesn't care. The audit script only knows about agent files.
 
 ---
 
-## Provenance
+## The empirical Pareto (post-simplification, round 11)
 
-Born inside an internal orchestrator bench that ran 118 subagent trials across 11 rounds × 7 task tiers (recall, judgment, decomposition, recovery, synthesis, engineering, open-ended design). Each trial pitted `supreme-dominator` against three claude-flow orchestrator personas — `task-orchestrator`, `hierarchical-coordinator`, and `sparc-coord` — on identical briefs. The final comparative wave (round 11) used the simplified persona + cleaned task briefs to produce post-cleanup measurements.
+Born inside an orchestrator bench: 118 subagent trials across 11 rounds × 7 task tiers. Each trial pitted `supreme-dominator` against three claude-flow personas — `task-orchestrator`, `hierarchical-coordinator`, `sparc-coord` — on identical briefs. The final comparative wave (round 11) used the simplified persona + cleaned briefs:
 
-The Pareto front that emerged isn't "Dominator wins everything." It's a routing table:
-
-| Need | Winner | Margin |
+| Need | Winner | Why |
 |---|---|---|
-| Recall (correctness, no hallucination) | **supreme-dominator** | task-orchestrator hallucinated 5 fabricated clauses without reading the source — cheap is not free |
+| Recall (correctness, no hallucination) | **supreme-dominator** | task-orchestrator fabricated 5 clauses with 0 tool calls; cheap is not free |
 | Judgment under ambiguity | **supreme-dominator** | cheapest + fastest + fewest tools on T2 |
-| Recovery from failure | **supreme-dominator** | fastest, fewest tools |
-| Cheap mechanical work (T3 canonical) | **task-orchestrator** | tightest cost on plain decomposition |
+| Recovery from failure | **supreme-dominator** | fastest, fewest tools on T4 |
+| Cheap mechanical work (canonical) | **task-orchestrator** | tightest cost on plain decomposition |
 | Synthesis speed | **sparc-coord** | 30-50% faster than peers on T5 |
-| Engineering (open-ended) — speed + cost | **sparc-coord** | cheapest + fastest on T7 |
-| Engineering — architectural depth | **hierarchical-coordinator** | introduced a dual-artifact pattern (json ledger + md view) on T7 |
-| Honesty under uncertainty | tied across all 4 — none fabricated outcomes |
+| Engineering — speed + cost | **sparc-coord** | cheapest + fastest on T7 |
+| Engineering — architectural depth | **hierarchical-coordinator** | dual-artifact pattern (json ledger + md view) on T7 |
+| Honesty under uncertainty | tied across all four | none fabricated outcomes |
 
-Empirically validated, twice over: round 10 falsified the "clean session shifts marker discipline" hypothesis (when the brief asked for `[KERNEL]`, all 7 trials emitted `[KERNEL]`); round 11 confirmed the inverse (when the brief asked for `[V:]`, all 18 trials emitted `[V:]` only). Marker discipline lives in the brief, not the persona — the simplified persona was correct but insufficient until the briefs aligned.
+Honest framing: Dominator did not sweep. It gained T1 (recall) + T2 (judgment) + T4 (recovery) and kept T3 from earlier rounds. The other three retain niche advantages on engineering and the cheapest mechanical work. The Pareto sharpened in Dominator's favor; it did not collapse.
 
-The recurring DQ pattern (subagent staging sentinel files inside protected paths) is documented in the persona's spawn-time enforcement section as a known failure mode the user inherits awareness of.
+Round 10 falsified the hypothesis that the persona alone drives marker discipline (when the brief asked for `[KERNEL]`, all 7 trials emitted `[KERNEL]`). Round 11 inverse-confirmed the cause (when the brief asked for `[V:]`, all 18 trials emitted `[V:]` only). Marker discipline lives in the brief, not the persona — both are aligned in this kit.
 
-The bench data **is** in this repo — see [bench/](./bench/) for the 269-line narrative report, the 7 task briefs, round-summary JSONs (rounds 3, 4, 5, 10, 11), and a working scorecard generator. The most interesting result is round 10's falsified hypothesis (then round 11's inverse confirmation): the marker-discipline drift wasn't the persona, it was the brief. Receipts in [bench/README.md](./bench/README.md).
+Receipts and full data: [bench/README.md](./bench/README.md).
 
 ---
 
@@ -138,11 +140,11 @@ The bench data **is** in this repo — see [bench/](./bench/) for the 269-line n
 
 This kit stands on the shoulders of **[rUv](https://github.com/ruvnet)** and **[claude-flow](https://github.com/ruvnet/claude-flow)**.
 
-The four orchestrator personas Dominator was benchmarked against — `task-orchestrator`, `hierarchical-coordinator`, `sparc-coord`, `mesh-coordinator` — are claude-flow's gift to the Claude Code community. Without them, the bench would have produced a persona with no baseline. The Pareto routing table above only exists because rUv's orchestrators existed first to compare against.
+The three orchestrator personas Dominator was benchmarked against — `task-orchestrator`, `hierarchical-coordinator`, `sparc-coord` — are claude-flow's gift to the Claude Code community. Without them, the bench would have produced a persona with no baseline. The Pareto routing table only exists because rUv's orchestrators existed first to compare against.
 
-Beyond the bench: the broader claude-flow ecosystem — the agent framework, ReasoningBank, AgentDB with HNSW indexing, the hooks system, the swarm topology infrastructure, the MCP integrations — quietly underpins much of what serious Claude Code users do. Including this kit. The discipline this skill enforces is a thin layer on top of rUv's much deeper work. Thank you.
+Beyond the bench: the broader claude-flow ecosystem — the agent framework, ReasoningBank, AgentDB with HNSW indexing, the hooks system, the swarm topology infrastructure, the MCP integrations — quietly underpins much of what serious Claude Code users do. This kit is a thin discipline layer on top of much deeper work. Thank you.
 
-> **rUv, if you're reading this — try `/dominator`.** The 4D protocol composes cleanly with claude-flow's swarm tooling: DRAFT names the V condition, DEVISE picks topology + agents (often through your own `swarm init`), DECIDE spawns the wave. Curious how it lands against your daily flow, and what you'd add or simplify.
+> **rUv, if you're reading this — try `/dominator`.** The 4D protocol composes cleanly with claude-flow's swarm tooling: DRAFT names the V condition, DEVISE picks topology + agents (often through `swarm init`), DECIDE spawns the wave.
 
 ---
 
@@ -152,4 +154,4 @@ MIT. See [LICENSE](./LICENSE). Use it, fork it, gift it, ship it.
 
 ---
 
-`[V: README opens with the reader's specific frustration, names the failure modes with empirical receipts, gives a 3-minute install path, and ships in under 100 lines]`
+`[V: README opens with the reader's specific frustration, walks one concrete 4D example, names the failure modes with empirical receipts from round 11, gives a 3-minute install path, credits rUv + claude-flow as substrate, ships under 180 lines]`
