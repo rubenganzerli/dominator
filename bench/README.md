@@ -16,13 +16,13 @@ bench/
 │   ├── T5-synthesis.md          # Cross-domain audit + prioritization
 │   ├── T6-engineering.md        # Full SPARC cycle — build a real, executable artifact
 │   └── T7-bench-scorecard.md    # Open-ended engineering — design a scorecard
-├── results/                     # Round-summary JSONs (aggregates)
-│   ├── round3-summary.json      # 20 trials — first parallel wave with all 4 orchestrators
-│   ├── round4-summary.json      # 16 trials — selective N=3 fill for variance signal
-│   ├── round5-summary.json      # 9 trials — T5 first-time graded + T7 introduced
-│   ├── round10-summary.json     # 7 trials — supreme-dominator clean-session × cleaned-tree
-│   ├── round11-summary.json     # 18 trials — comparative wave post-simplification
-│   └── round12-summary.json     # 1 trial — dogfood (persona authoring this kit's docs)
+├── results/                                  # Round-summary JSONs (aggregates)
+│   ├── round3-summary-2026-05-04.json         # 20 trials — first parallel wave with all 4 orchestrators
+│   ├── round4-summary-2026-05-04.json         # 16 trials — selective N=3 fill for variance signal
+│   ├── round5-summary-2026-05-05.json         # 9 trials — T5 first-time graded + T7 introduced
+│   ├── round10-summary-2026-05-05.json        # 7 trials — supreme-dominator clean-session × cleaned-tree
+│   ├── round11-summary-2026-05-05.json        # 18 trials — comparative wave post-simplification
+│   └── round12-summary-2026-05-05.json        # 1 trial — dogfood (persona authoring this kit's docs)
 ├── scorecards/
 │   ├── scorecard-dom-r8.md      # Auto-generated — pass/fail grid, variance, DQ banner, Pareto
 │   └── scorecard-dom-r8.mjs     # Generator — deterministic regeneration from results/
@@ -37,7 +37,7 @@ The full per-trial JSONs (~30 files) aren't shipped. They're noisy and the round
 
 **15 minutes.** Add "Rounds 6-10 — Clean-State Measurement". That's where the marker-discipline hypothesis was tested and falsified — the most interesting result in the whole bench, because it means the persona was not the cause we thought it was.
 
-**One trial in detail.** Open `results/round10-summary.json`. Seven round-10 trials with token costs, durations, marker emissions, and findings per task.
+**One trial in detail.** Open `results/round10-summary-2026-05-05.json`. Seven round-10 trials with token costs, durations, marker emissions, and findings per task.
 
 **Replication.** Skip to the bottom of this file.
 
@@ -134,7 +134,7 @@ paired round 10 falsified / round 11 inverse-confirmed findings.
 - **Not a benchmark of LLMs.** This measures orchestrator personas (text-based agent definitions). The underlying model was held constant across trials.
 - **Not statistically rigorous.** N=3 per cell is the threshold for "signal"; many cells stayed at N=1. The bench is empirical observation, not controlled experiment.
 - **Not reusable as-is.** The task briefs reference specific paths in the maintainer's tree (e.g., T2 names `analyst.md`, T3 references `~/.claude/agents/`). To replicate on your own tree, adapt the paths.
-- **Not the full picture.** 118 trials is a lot but not exhaustive. The Pareto table in the main README is the cleanest signal that emerged; finer-grained discrimination would need more trials.
+- **Not the full picture.** 119 trials is a lot but not exhaustive. The Pareto table in the main README is the cleanest signal that emerged; finer-grained discrimination would need more trials.
 
 ## How to replicate (sketch)
 

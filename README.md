@@ -54,7 +54,7 @@ If you use Claude Code seriously, you spawn a lot of subagents. They drift. Spec
 | Sentinel paths in protected dirs | `__T6_DOM_R3__` inside `agents/core/` | Spawn-time enforcement clause documents this exact failure |
 | Inheritance drift | New agent file ships without protocol | `protocol-audit.mjs` ratchet — exits non-zero, breaks CI |
 
-Each row was observed at least once across an internal bench of 118 subagent trials. The kit is what closed each one.
+Each row was observed at least once across an internal bench of 119 subagent trials. The kit is what closed each one.
 
 ---
 
@@ -115,7 +115,7 @@ Full setup in [INSTALL.md](./INSTALL.md) — including the routing-table fill-in
 
 ## The empirical Pareto (post-simplification, round 11)
 
-Born inside an orchestrator bench: 118 subagent trials across 11 rounds × 7 task tiers. Each trial pitted `supreme-dominator` against three claude-flow personas — `task-orchestrator`, `hierarchical-coordinator`, `sparc-coord` — on identical briefs. The final comparative wave (round 11) used the simplified persona + cleaned briefs:
+Born inside an orchestrator bench: 119 subagent trials across 12 rounds × 7 task tiers. Each trial pitted `supreme-dominator` against three claude-flow personas — `task-orchestrator`, `hierarchical-coordinator`, `sparc-coord` — on identical briefs. The final comparative wave (round 11) used the simplified persona + cleaned briefs:
 
 | Need | Winner | Why |
 |---|---|---|
@@ -156,7 +156,7 @@ MIT. See [LICENSE](./LICENSE). Use it, fork it, gift it, ship it.
 
 ## Postscript — this README is round-12 trial data
 
-The page you just read was authored by `/dominator` itself in a single solo trial (147k tokens, 5 minutes wall clock, 0 sub-agent spawns despite a cap of 4). The persona applied 4D to the task "write your own kit's documentation": named the V condition first, chose solo execution because three docs is within working capacity, executed by reading the source files and writing the three docs directly to disk. Captured in [bench/results/round12-summary.json](./bench/results/round12-summary-2026-05-05.json).
+The page you just read was authored by `/dominator` itself in a single solo trial (147k tokens, 5 minutes wall clock, 0 sub-agent spawns despite a cap of 4). The persona applied 4D to the task "write your own kit's documentation": named the V condition first, chose solo execution because three docs is within working capacity, executed by reading the source files and writing the three docs directly to disk. Captured in [bench/results/round12-summary-2026-05-05.json](./bench/results/round12-summary-2026-05-05.json).
 
 The kit's documentation is not *about* the persona — it *is* the persona's output. If you trust this README, you're already trusting the persona. The dog ate its own food in front of the camera.
 
