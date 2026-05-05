@@ -100,7 +100,7 @@ Full setup in [INSTALL.md](./INSTALL.md) — including the routing-table fill-in
 └── README.md                          You're reading it
 ```
 
-The persona ships with three named defaults — **The Forge** (where you build), **The Atlas** (where you learn), **The Salon** (where you present) — plus an Infrastructure row for meta-work. The metaphors are evocative on purpose. They suggest a workshop with three rooms; the user decides what each room contains. Rename them, replace them, or keep them and just point them at real paths.
+**Forge / Atlas / Salon are not directories.** They are three named rows in the persona's *Project Routing Table* — a markdown table inside `agents/supreme-dominator.template.md` (around line 32). The defaults sketch a workshop with three rooms — **The Forge** (where you build), **The Atlas** (where you learn), **The Salon** (where you present) — plus an Infrastructure row for meta-work. They are evocative placeholders, not file structure. During install (Step 2 of [INSTALL.md](./INSTALL.md)) you open the template and either keep the metaphors and point them at real paths, rename them to your own project names, or replace them entirely. The kit ships zero folders by those names; the table is the thing.
 
 ---
 
