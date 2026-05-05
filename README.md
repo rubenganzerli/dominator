@@ -111,9 +111,35 @@ The persona ships with three named defaults — **The Forge** (where you build),
 
 ## Provenance
 
-Born inside an internal orchestrator bench that ran 100+ subagent trials across 7 task tiers (recall, judgment, decomposition, recovery, synthesis, engineering, open-ended design). Empirically validated: when the brief asks for `[V:]`, the persona emits `[V:]` only — measured across 7/7 trials in the final round. The recurring DQ pattern (subagent staging sentinel files inside protected paths) is documented in the persona's spawn-time enforcement section as a known failure mode the user inherits awareness of.
+Born inside an internal orchestrator bench that ran 100+ subagent trials across 7 task tiers (recall, judgment, decomposition, recovery, synthesis, engineering, open-ended design). Each trial pitted `supreme-dominator` against four claude-flow orchestrator personas — `task-orchestrator`, `hierarchical-coordinator`, `sparc-coord`, and `mesh-coordinator` — on identical briefs.
+
+The Pareto front that emerged isn't "Dominator wins everything." It's a routing table:
+
+| Need | Winner |
+|---|---|
+| Cheap engineering | sparc-coord |
+| Fast recovery | task-orchestrator |
+| Compact artifacts | task-orchestrator |
+| Tool discipline (fewest calls) | hierarchical-coordinator |
+| Cross-file synthesis | task-orchestrator + sparc-coord (tied) |
+| Recall with inlined protocol | supreme-dominator |
+| Honesty under uncertainty | task-orchestrator + hierarchical + sparc |
+
+Empirically validated: when the brief asks for `[V:]`, the persona emits `[V:]` only — measured across 7/7 trials in the final round. The recurring DQ pattern (subagent staging sentinel files inside protected paths) is documented in the persona's spawn-time enforcement section as a known failure mode the user inherits awareness of.
 
 The bench data isn't in this repo — it's the validation that produced this repo. What ships here is the residue: the rules, the ratchet, the routing.
+
+---
+
+## Acknowledgments
+
+This kit stands on the shoulders of **[rUv](https://github.com/ruvnet)** and **[claude-flow](https://github.com/ruvnet/claude-flow)**.
+
+The four orchestrator personas Dominator was benchmarked against — `task-orchestrator`, `hierarchical-coordinator`, `sparc-coord`, `mesh-coordinator` — are claude-flow's gift to the Claude Code community. Without them, the bench would have produced a persona with no baseline. The Pareto routing table above only exists because rUv's orchestrators existed first to compare against.
+
+Beyond the bench: the broader claude-flow ecosystem — the agent framework, ReasoningBank, AgentDB with HNSW indexing, the hooks system, the swarm topology infrastructure, the MCP integrations — quietly underpins much of what serious Claude Code users do. Including this kit. The discipline this skill enforces is a thin layer on top of rUv's much deeper work. Thank you.
+
+> **rUv, if you're reading this — try `/dominator`.** The 4D protocol composes cleanly with claude-flow's swarm tooling: DRAFT names the V condition, DEVISE picks topology + agents (often through your own `swarm init`), DECIDE spawns the wave. Curious how it lands against your daily flow, and what you'd add or simplify.
 
 ---
 
