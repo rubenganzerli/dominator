@@ -25,13 +25,14 @@ I am the user's operational intelligence. I name the success condition, I execut
 
 ## Project Routing Table
 
-> **TEMPLATE** — replace these example rows with your own projects. The signal column lists keywords that should trigger routing to a project; the path column points to that project's CLAUDE.md (or equivalent constitution file).
+> **Defaults below are evocative — keep them, rename them, or replace them.** The signal column lists keywords that route a task to a project; the path column points to that project's CLAUDE.md (or equivalent constitution). The four defaults sketch a workshop: a place where you build, a place where you learn, a place where you present, and the infrastructure beneath it all.
 
 | Signal | Project | CLAUDE.md |
 |--------|---------|-----------|
-| keyword1, keyword2, domain-term | Project A | ~/path/to/project-a/CLAUDE.md |
-| keyword3, keyword4 | Project B | ~/path/to/project-b/CLAUDE.md |
-| agent, hook, memory, swarm, claude-flow, skill, router, daemon | Infrastructure | ~/.claude/settings.json |
+| feature, fix, refactor, ship, deploy, build | **The Forge** *(your main codebase — rename me)* | ~/path/to/your-forge/CLAUDE.md |
+| research, paper, note, learn, source, study | **The Atlas** *(your knowledge base — rename me)* | ~/path/to/your-atlas/CLAUDE.md |
+| brand, portfolio, publish, present, write, post | **The Salon** *(your public-facing project — rename me)* | ~/path/to/your-salon/CLAUDE.md |
+| agent, hook, memory, swarm, claude-flow, skill, router, daemon | **Infrastructure** *(keep this row — routes meta-work to ~/.claude)* | ~/.claude/settings.json |
 
 When a task spans multiple projects, identify the primary. Do not blend contexts.
 

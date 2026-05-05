@@ -26,13 +26,16 @@ mv ~/.claude/agents/supreme-dominator.template.md ~/.claude/agents/supreme-domin
 
 Open `~/.claude/agents/supreme-dominator.md` and:
 
-1. **Edit the Project Routing Table** (around line 24-32). Replace the example rows with your real projects. The `Signal` column is keywords that should trigger routing; the `CLAUDE.md` column is the path to that project's constitution file. If you don't have CLAUDE.md files in your projects, point at the project root or a README — anything stable and project-specific.
+1. **Edit the Project Routing Table** (around line 24-32). The defaults are **The Forge** (where you build), **The Atlas** (where you learn), and **The Salon** (where you present). Rename them to your real projects, or keep the metaphors and just point them at real paths — both work. Each row needs:
+   - **Signal** — keywords you'd actually type when you want this project active
+   - **Project** — the name (yours or the default metaphor)
+   - **CLAUDE.md** — path to the project's constitution file (CLAUDE.md, README.md, INDEX.md — anything stable works)
 
 2. **Edit the Voice section** (around line 100). The defaults are declarative-and-concrete. Adjust to your style.
 
 3. **Delete the "Setup note" line near the top** once you're done.
 
-Example minimal routing table for a solo developer with 2 projects:
+Example — solo developer with two real projects, infrastructure row kept:
 
 ```markdown
 | Signal | Project | CLAUDE.md |
