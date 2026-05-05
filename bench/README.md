@@ -1,6 +1,6 @@
 # Bench — Receipts
 
-This directory holds the empirical work that produced the rest of the kit. The Pareto routing table in the main [README.md](../README.md) didn't come from intuition; it came from 118 subagent trials measured here.
+This directory holds the empirical work that produced the rest of the kit. The Pareto routing table in the main [README.md](../README.md) didn't come from intuition; it came from 119 subagent trials measured here. The most recent (round 12) is the kit's documentation itself — the persona writing its own public-facing docs as a single solo trial. You're reading round-12 output right now.
 
 ## What's in here
 
@@ -21,7 +21,8 @@ bench/
 │   ├── round4-summary.json      # 16 trials — selective N=3 fill for variance signal
 │   ├── round5-summary.json      # 9 trials — T5 first-time graded + T7 introduced
 │   ├── round10-summary.json     # 7 trials — supreme-dominator clean-session × cleaned-tree
-│   └── round11-summary.json     # 18 trials — comparative wave post-simplification
+│   ├── round11-summary.json     # 18 trials — comparative wave post-simplification
+│   └── round12-summary.json     # 1 trial — dogfood (persona authoring this kit's docs)
 ├── scorecards/
 │   ├── scorecard-dom-r8.md      # Auto-generated — pass/fail grid, variance, DQ banner, Pareto
 │   └── scorecard-dom-r8.mjs     # Generator — deterministic regeneration from results/
@@ -92,17 +93,41 @@ The honest answer to "did dominator now rule them all?" is **no, but the Pareto 
 
 The Pareto sharpened. It did not collapse.
 
-## Aggregate — through round 11
+### Round 12 — dogfood
+
+```
+Setup: give the simplified persona one task — "write the public-repo
+       documentation for the /dominator kit yourself." 4D applies. Solo
+       or spawn is the persona's choice. No human ghost-writing.
+
+Result: 1/1 PASS. 441 lines of polished docs (README + INSTALL +
+        bench/README) produced in one solo trial, 0/4 sub-agent spawns
+        used (well under cap), 147k tokens, 5 minutes wall clock.
+
+Deeper validation than any Pareto cell: the docs are not ABOUT the
+persona, they ARE the persona's output. A reader who trusts the docs is
+already trusting the persona — quality signal and marketing copy
+collapsed into the same artifact. The dog ate its own food in front of
+the camera.
+
+Three measurable improvements over the prior human-authored drafts:
+welcoming framing of the routing-table personalization (keep/rename/
+replace), concrete 4D example (JWT verifier extraction, V condition
+checked against `npm test exit 0`), tightened narrative arc on the
+paired round 10 falsified / round 11 inverse-confirmed findings.
+```
+
+## Aggregate — through round 12
 
 | Metric | Value |
 |---|---|
-| Total trials | 118 |
-| PASS | 116 |
+| Total trials | 119 |
+| PASS | 117 |
 | DQ | 1 |
 | Honest refusals counted as DQ | 1 |
 | Quality flags (hallucination flagged but self-reported PASS) | 1 |
 | Pass rate | 98.3% |
-| Estimated tokens cumulative | ~13.2M across 11 rounds |
+| Estimated tokens cumulative | ~13.4M across 12 rounds |
 
 ## What this bench is NOT
 

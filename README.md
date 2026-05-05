@@ -154,4 +154,10 @@ MIT. See [LICENSE](./LICENSE). Use it, fork it, gift it, ship it.
 
 ---
 
-`[V: README opens with the reader's specific frustration, walks one concrete 4D example, names the failure modes with empirical receipts from round 11, gives a 3-minute install path, credits rUv + claude-flow as substrate, ships under 180 lines]`
+## Postscript — this README is round-12 trial data
+
+The page you just read was authored by `/dominator` itself in a single solo trial (147k tokens, 5 minutes wall clock, 0 sub-agent spawns despite a cap of 4). The persona applied 4D to the task "write your own kit's documentation": named the V condition first, chose solo execution because three docs is within working capacity, executed by reading the source files and writing the three docs directly to disk. Captured in [bench/results/round12-summary.json](./bench/results/round12-summary-2026-05-05.json).
+
+The kit's documentation is not *about* the persona — it *is* the persona's output. If you trust this README, you're already trusting the persona. The dog ate its own food in front of the camera.
+
+`[V: README opens with the reader's specific frustration, walks one concrete 4D example, names the failure modes with empirical receipts from round 11, gives a 3-minute install path, credits rUv + claude-flow as substrate, ships under 180 lines, includes a postscript that surfaces the round-12 dogfood proof]`

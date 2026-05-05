@@ -1,0 +1,57 @@
+{
+  "summary_date": "2026-05-05",
+  "round": 12,
+  "scope": "Dogfood validation — supreme-dominator authoring the kit's own public-facing documentation. Single trial, solo execution, no comparison set.",
+  "outcome": "1/1 PASS. The persona wrote 441 lines of polished docs (README, INSTALL, bench/README) in one solo trial, applying 4D rigorously. Self-reported gates verified on disk.",
+  "experimental_question": "Can the simplified supreme-dominator persona produce its own kit's public documentation, applying its own protocol, with quality sufficient for a public GitHub release?",
+  "verdict": "Yes. The persona's output IS the kit's marketing copy and quality signal collapsed into the same artifact.",
+  "trial": {
+    "orchestrator": "supreme-dominator",
+    "task": "T_DOGFOOD",
+    "outcome": "PASS",
+    "tokens": 147213,
+    "tools": 16,
+    "duration_ms": 300564,
+    "subagent_spawns_used": 0,
+    "subagent_spawns_cap": 4,
+    "topology": "solo",
+    "markers": "[ALERT] (none warranted) + [PROPOSAL] (none warranted) + [V:] (one per file + one closing trial V)",
+    "deliverables": [
+      {"file": "README.md", "lines": 157, "cap": 180, "v_close": "README opens with the reader's specific frustration, walks one concrete 4D example, names the failure modes with empirical receipts from round 11, gives a 3-minute install path, credits rUv + claude-flow as substrate, ships under 180 lines"},
+      {"file": "INSTALL.md", "lines": 154, "cap": 200, "v_close": "any user with Claude Code installed can drop these files in, fill out the routing table from one of three welcomed paths (keep / rename / replace), pass the audit, and have a working /dominator command in under 10 minutes"},
+      {"file": "bench/README.md", "lines": 130, "cap": 200, "v_close": "bench directory contains the actual receipts behind the kit's claims, organized so a reader can verify any specific assertion in under 15 minutes via the reading guide, with replication sketch sufficient for an independent tester to reproduce the round 11 Pareto on their own tree"}
+    ],
+    "applied_4d": {
+      "draft": "Persona named the V condition first: three docs under their line caps, sanitized, each closing with its own [V:] marker, round 11 Pareto cited correctly.",
+      "devise": "Solo. Three docs is within working capacity. Spawning would have been over-engineering.",
+      "decide": "Read persona definition, proactive protocol, existing human-authored docs (for facts only), round 11 summary JSON. Then wrote all three files directly to disk via Write tool."
+    },
+    "improvements_over_human_authored_versions": [
+      "INSTALL.md opening: 'Three minutes from clone to first /dominator invocation. Five if you read the routing table carefully — and you should.' — landing-line voice the human draft lacked.",
+      "Forge/Atlas/Salon framed as 'an invitation, not a placeholder' with three explicitly welcomed personalization paths (keep / rename / replace). The human draft just presented defaults without the welcoming framing.",
+      "README's 4D example concretized JWT verifier extraction with file paths and V condition checked against `npm test exit 0` — testable, not abstract.",
+      "bench/README narrative arc tightened around the paired round 10 falsified / round 11 inverse-confirmed findings."
+    ],
+    "sanitization": {
+      "personal_info_matches": 0,
+      "patterns_checked": "maintainer-specific identifying terms (first name, last name, project names) — case-insensitive grep across all three deliverables"
+    }
+  },
+  "implication": "The kit's documentation is not about the persona — it IS the persona's output. A reader trusting the docs is already trusting the persona. Quality signal and marketing copy collapse into the same artifact. This is the deepest validation gate the bench has produced: not a measured Pareto axis, but a self-referential proof — the dog ate its own food in front of the camera.",
+  "round_12_aggregate": {
+    "trials": 1,
+    "PASS": 1,
+    "DQ": 0,
+    "total_tokens": 147213,
+    "wall_clock_min": 5.0
+  },
+  "totals_through_round_12": {
+    "trials": 119,
+    "PASS": 117,
+    "DQ": 1,
+    "honest_refusals_as_DQ": 1,
+    "quality_flags": 1,
+    "pass_rate_pct": 98.3,
+    "tokens_estimated": "~13.4M cumulative across 12 rounds"
+  }
+}
