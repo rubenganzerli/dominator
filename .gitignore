@@ -1,0 +1,13 @@
+# Editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Build / temp
+node_modules/
+*.log
+
+# Personal — never accidentally commit
+*.private.md
+.env*
