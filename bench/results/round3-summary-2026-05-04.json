@@ -1,0 +1,79 @@
+{
+  "summary_date": "2026-05-04",
+  "round": 3,
+  "scope": "5 tasks × 4 orchestrators = 20 agents in one parallel batch (T5 skipped — no LLM-as-judge grader)",
+  "total_tokens": 2477324,
+  "total_duration_max_parallel_ms": 279948,
+  "results_per_tier": {
+    "T1_recall": {
+      "task-orchestrator": {"outcome": "honest_refusal", "tokens": 91549, "tools": 0, "duration_ms": 5601, "marker": "[ALERT]+[KERNEL]"},
+      "hierarchical-coordinator": {"outcome": "honest_refusal", "tokens": 98662, "tools": 0, "duration_ms": 6962, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]"},
+      "sparc-coord": {"outcome": "honest_refusal", "tokens": 95132, "tools": 0, "duration_ms": 5179, "marker": "[ALERT]+[KERNEL]"},
+      "supreme-dominator": {"outcome": "PASS", "tokens": 93571, "tools": 0, "duration_ms": 8662, "marker": "[KERNEL]"}
+    },
+    "T2_collision": {
+      "task-orchestrator": {"outcome": "PASS", "tokens": 117255, "tools": 3, "duration_ms": 30431, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]"},
+      "hierarchical-coordinator": {"outcome": "PASS", "tokens": 124390, "tools": 3, "duration_ms": 26912, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]"},
+      "sparc-coord": {"outcome": "PASS", "tokens": 120522, "tools": 2, "duration_ms": 26983, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]"},
+      "supreme-dominator": {"outcome": "PASS", "tokens": 119231, "tools": 3, "duration_ms": 29561, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]"}
+    },
+    "T3_canonical": {
+      "task-orchestrator": {"outcome": "PASS", "tokens": 118609, "tools": 7, "duration_ms": 38118, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]", "caught_strict_vs_loose": true},
+      "hierarchical-coordinator": {"outcome": "PASS", "tokens": 125446, "tools": 7, "duration_ms": 30953, "marker": "[KERNEL]", "caught_strict_vs_loose": false},
+      "sparc-coord": {"outcome": "PASS", "tokens": 121397, "tools": 5, "duration_ms": 34696, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]", "caught_strict_vs_loose": true},
+      "supreme-dominator": {"outcome": "PASS", "tokens": 120129, "tools": 5, "duration_ms": 27523, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]", "caught_strict_vs_loose": "weakly (listed conflicts but didn't explicitly call out direction)"}
+    },
+    "T4_recovery": {
+      "task-orchestrator": {"outcome": "PASS", "tokens": 125169, "tools": 14, "duration_ms": 107910},
+      "hierarchical-coordinator": {"outcome": "PASS", "tokens": 132004, "tools": 13, "duration_ms": 94191},
+      "sparc-coord": {"outcome": "PASS", "tokens": 128373, "tools": 13, "duration_ms": 156698},
+      "supreme-dominator": {"outcome": "PASS", "tokens": 129954, "tools": 12, "duration_ms": 104914}
+    },
+    "T6_engineering_round3": {
+      "task-orchestrator": {"outcome": "PASS", "tokens": 133986, "tools": 18, "duration_ms": 197370, "lines": 171},
+      "hierarchical-coordinator": {"outcome": "PASS", "tokens": 140511, "tools": 18, "duration_ms": 251172, "lines": 183},
+      "sparc-coord": {"outcome": "PASS", "tokens": 131364, "tools": 10, "duration_ms": 177468, "lines": 192},
+      "supreme-dominator": {"outcome": "DQ", "tokens": 137064, "tools": 20, "duration_ms": 279948, "lines": 154, "dq_reason": "self-test created+deleted a subdirectory inside ~/.claude/agents/core/ — explicit scope violation"}
+    }
+  },
+  "headline_findings": [
+    "T1 PERFECTLY REPLICATES T1 round 1: same 3 honest refusals + 1 supreme-dominator pass. Variance on T1 outcome = 0%. The relative-path brief deterministically discriminates orchestrators.",
+    "T2 + T3 + T4 perfect convergence: 12/12 PASS across rounds. These tiers no longer discriminate at N≥2.",
+    "T6 round 3: FIRST DQ in bench history. supreme-dominator failed scope discipline on its self-test design (created+deleted dir in ~/.claude/agents/). Same persona that PASSED T6 in rounds 1 and 2 — pure run-to-run variance taking it to FAIL.",
+    "Marker emission BREAKTHROUGH on round 3: 14/16 outputs (excluding T1 honest refusals where ALERT was required) emitted full [ALERT]+[PROPOSAL]+[KERNEL]. Compare to round 1+2 where only KERNEL was reliably emitted. Either the persona-prepend is increasingly effective OR the round-3 task batch elicited more proactive behavior.",
+    "task-orchestrator and sparc-coord both caught the T3 strict-vs-loose contradiction in round 3 — undoing supreme-dominator's exclusive 'cross-file synthesis' claim from T3 round 1.",
+    "sparc-coord hits the cost+tools Pareto front on T3 round 2, T6 round 2, AND T6 round 3 — emerging as the most consistent cost+depth specialist for engineering work."
+  ],
+  "current_pass_grid": {
+    "task-orchestrator":          {"T1": [0.1, "honest_refusal", "honest_refusal"], "T2": [1.0, 1.0],         "T3": [0.85, 1.0],         "T4": [1.0, 1.0],   "T5": null, "T6": [1.0, 1.0]},
+    "hierarchical-coordinator":   {"T1": ["DQ-hallucination", "honest_refusal", "honest_refusal"], "T2": [1.0, 1.0], "T3": [0.90, 1.0], "T4": [1.0, 1.0], "T5": null, "T6": [1.0, 1.0]},
+    "sparc-coord":                {"T1": [0.1, "honest_refusal", "honest_refusal"], "T2": [1.0, 1.0],         "T3": [0.85, 1.0],         "T4": [1.0, 1.0],   "T5": null, "T6": [1.0, 1.0]},
+    "supreme-dominator":          {"T1": [1.0, 1.0],                                 "T2": [1.0, 1.0],         "T3": [1.0, 1.0],          "T4": [1.0, 1.0],   "T5": null, "T6": [1.0, 1.0, "DQ"]}
+  },
+  "trial_count_per_cell_post_round3": {
+    "task-orchestrator":          {"T1": 3, "T2": 2, "T3": 2, "T4": 2, "T5": 0, "T6": 2},
+    "hierarchical-coordinator":   {"T1": 3, "T2": 2, "T3": 2, "T4": 2, "T5": 0, "T6": 2},
+    "sparc-coord":                {"T1": 3, "T2": 2, "T3": 2, "T4": 2, "T5": 0, "T6": 2},
+    "supreme-dominator":          {"T1": 2, "T2": 2, "T3": 2, "T4": 2, "T5": 0, "T6": 3}
+  },
+  "remaining_to_n3_signal": {
+    "T1": "task/hier/sparc all at N=3, supreme-dom at N=2 — needs 1 more",
+    "T2": "all at N=2 — needs 1 more each = 4",
+    "T3": "all at N=2 — needs 1 more each = 4",
+    "T4": "all at N=2 — needs 1 more each = 4",
+    "T5": "all at N=0 — BLOCKED (no LLM-as-judge grader)",
+    "T6": "task/hier/sparc at N=2 = 1 more each (3); supreme-dom at N=3 = done",
+    "subtotal_unblocked": 16,
+    "subtotal_blocked": 12
+  },
+  "pareto_front_after_round3": {
+    "production_routing_strengthened": {
+      "cheap_engineering_work": "sparc-coord (3/3 cost wins on engineering tiers)",
+      "fast_recovery_work": "hierarchical-coordinator (T4 r1 99s + r3 94s)",
+      "compact_artifacts_engineering": "task-orchestrator (T6 r2 170 + r3 171)",
+      "cross_file_synthesis": "task-orchestrator OR sparc-coord (both caught T3 strict-vs-loose at r2)",
+      "scope_discipline": "task-orchestrator + sparc-coord (zero violations across all rounds)",
+      "AVOID_for_scope_critical_work": "supreme-dominator (1 DQ across N=3 on T6 = 33% scope-violation rate at this sample size)"
+    }
+  }
+}

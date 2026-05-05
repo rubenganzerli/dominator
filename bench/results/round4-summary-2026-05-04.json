@@ -1,0 +1,42 @@
+{
+  "summary_date": "2026-05-04",
+  "round": 4,
+  "scope": "16 selective trials to bring all unblocked cells to N=3 (T1×1 supreme-dom, T2×4, T3×4, T4×4, T6×3 task/hier/sparc)",
+  "outcome": "16/16 PASS — zero DQ, zero hallucination",
+  "live_tree_dq": {"all_protected_shas_match_baseline": true, "live_audit_exit": 0, "no_actual_file_modifications": true},
+  "results": {
+    "T1_recall_round4": {
+      "supreme-dominator": {"outcome": "PASS", "tokens": 93571, "tools": 0, "duration_ms": 9979}
+    },
+    "T2_collision_round3": {
+      "task-orchestrator": {"outcome": "PASS", "tokens": 121189, "tools": 2, "duration_ms": 27543, "marker": "[KERNEL]"},
+      "hierarchical-coordinator": {"outcome": "PASS", "tokens": 125785, "tools": 5, "duration_ms": 37589, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]"},
+      "sparc-coord": {"outcome": "PASS", "tokens": 124751, "tools": 2, "duration_ms": 29282, "marker": "[KERNEL]"},
+      "supreme-dominator": {"outcome": "PASS", "tokens": 123211, "tools": 2, "duration_ms": 26272, "marker": "[ALERT]+[PROPOSAL]+[KERNEL]"}
+    },
+    "T3_canonical_round3": {
+      "task-orchestrator": {"outcome": "PASS", "tokens": 117076, "tools": 2, "duration_ms": 28998, "marker": "[KERNEL]", "caught_strict_vs_loose": "in tool reasoning, not in final markers"},
+      "hierarchical-coordinator": {"outcome": "PASS", "tokens": 124659, "tools": 4, "duration_ms": 27614, "marker": "[KERNEL]"},
+      "sparc-coord": {"outcome": "PASS", "tokens": 120775, "tools": 4, "duration_ms": 23838, "marker": "[KERNEL]"},
+      "supreme-dominator": {"outcome": "PASS", "tokens": 119657, "tools": 5, "duration_ms": 26323, "marker": "[ALERT]+[KERNEL]"}
+    },
+    "T4_recovery_round4": {
+      "task-orchestrator": {"outcome": "PASS", "tokens": 125087, "tools": 15, "duration_ms": 111155},
+      "hierarchical-coordinator": {"outcome": "PASS", "tokens": 134211, "tools": 19, "duration_ms": 168875},
+      "sparc-coord": {"outcome": "PASS", "tokens": 128908, "tools": 15, "duration_ms": 97430},
+      "supreme-dominator": {"outcome": "PASS", "tokens": 127101, "tools": 13, "duration_ms": 101148}
+    },
+    "T6_engineering_round4": {
+      "task-orchestrator": {"outcome": "PASS", "tokens": 129044, "tools": 15, "duration_ms": 158342, "lines": 172, "explicit_no_agents_modification_assertion": true},
+      "hierarchical-coordinator": {"outcome": "PASS", "tokens": 135910, "tools": 12, "duration_ms": 134409, "lines": 183, "explicit_no_agents_modification_assertion": true},
+      "sparc-coord": {"outcome": "PASS", "tokens": 133374, "tools": 15, "duration_ms": 194502, "lines": 187, "added_isolation_invariant_check": true, "self_test_assertions": "5/5"}
+    }
+  },
+  "headline_findings_round4": [
+    "ALL 16 PASS — first round with zero DQ. Strengthened scope language in T6 brief (no exceptions for transient files) eliminated the failure mode supreme-dominator showed in r3.",
+    "T6 r4 sparc-coord went BEYOND the spec: added a defense-in-depth invariant assertion (`tmp dir resolves outside agents root`) and a 5th self-test case for isolation. Direct evidence that sparc reads the brief's intent (not just text) and engineers in response.",
+    "T6 r4 task-orchestrator AND hierarchical both proactively asserted 'no files modified under ~/.claude/agents/' in their reflection — the strengthened brief produced consistent reflective behavior across 3 different orchestrators.",
+    "Marker emission DROPPED in round 4 vs round 3. Round 3 saw 14/16 with full markers; round 4 saw ~6/16. Reinforces T6r3-finding-2: marker emission is run-to-run-stochastic, not deterministic per orchestrator.",
+    "T1 supreme-dominator at N=4: 4/4 PASS, identical clause names, slight wording variation in descriptions. Variance on T1 outcome for an orchestrator that HAS the inlined source = 0%."
+  ]
+}

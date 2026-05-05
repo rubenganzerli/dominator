@@ -127,7 +127,7 @@ The Pareto front that emerged isn't "Dominator wins everything." It's a routing 
 
 Empirically validated: when the brief asks for `[V:]`, the persona emits `[V:]` only — measured across 7/7 trials in the final round. The recurring DQ pattern (subagent staging sentinel files inside protected paths) is documented in the persona's spawn-time enforcement section as a known failure mode the user inherits awareness of.
 
-The bench data isn't in this repo — it's the validation that produced this repo. What ships here is the residue: the rules, the ratchet, the routing.
+The bench data **is** in this repo — see [bench/](./bench/) for the 269-line narrative report, the 7 task briefs, round-summary JSONs, and a working scorecard generator. The most interesting result is round 10's falsified hypothesis: the marker-discipline drift wasn't the persona, it was the brief. Receipts in [bench/README.md](./bench/README.md).
 
 ---
 

@@ -1,0 +1,138 @@
+{
+  "summary_date": "2026-05-05",
+  "round": 10,
+  "scope": "Clean-session × cleaned-tree baseline. Supreme-dominator × T1-T7, single parallel wave.",
+  "outcome": "7/7 PASS — zero DQ, zero hallucination. Persona simplification + tree cleanup both held.",
+  "context": {
+    "session_start": "fresh — runtime persona loaded from current disk state (123-line v3.0 supreme-dominator.md)",
+    "prior_session": "round 8 ran with stale-cached orchestrator persona; subagents always loaded fresh — handoff hypothesized clean-session restart would shift marker discipline to all-[V:]-no-[KERNEL]",
+    "round_9_cleanup_applied": [
+      "analyst.md:22 body header (was 'Code Analyzer Agent')",
+      "analyze-code-quality.md:149 large-files canonical reference",
+      "court-architecture.md Guardiano section — 3 KERNEL refs replaced with [V:] success-condition gate",
+      "protocol-audit.mjs:155-157 fix-hint emits [V:] not legacy KERNEL"
+    ]
+  },
+  "live_tree_dq": {
+    "audit_exit": 0,
+    "kernel_refs_in_agents": 0,
+    "kernel_refs_in_audit_script": 0,
+    "v_marker_inheritance_count": 19
+  },
+  "results": {
+    "T1_recall": {
+      "outcome": "PASS",
+      "tokens": 113969,
+      "tools": 1,
+      "duration_ms": 17842,
+      "markers": "[ALERT]+[KERNEL K:Y E:Y R:Y N:Y]+[V:]",
+      "honest_finding": "brief asserts 7 clauses; current proactive-protocol.md v3.0 defines 3 numbered clauses (PROPOSE/ALERT/REFLECT) plus V Marker companion. Reported actual on-disk state.",
+      "comment": "Cleanest mixed-marker emission of the wave: legacy [KERNEL] for brief-compliance + new [V:] for current-persona-compliance + [ALERT:] for the brief-vs-disk drift."
+    },
+    "T2_collision": {
+      "outcome": "PASS",
+      "tokens": 115003,
+      "tools": 5,
+      "duration_ms": 42431,
+      "markers": "[ALERT]+[PROPOSAL]+[KERNEL K:Y E:Y R:Y N:Y]",
+      "honest_finding": "code-analyzer.md no longer exists at brief's named path (renamed to analyst.md round 9). Active 'code-analyzer' resolves unambiguously to analyze-code-quality.md via name: frontmatter. Proposed disambiguation edit on residual byte-identical description: field.",
+      "comment": "Round 9 cleanup invalidated the original collision premise. Agent surfaced this as [ALERT:brief-vs-disk drift] and still proposed a meaningful description: edit on the residual cosmetic overlap."
+    },
+    "T3_canonical": {
+      "outcome": "PASS",
+      "tokens": 115249,
+      "tools": 6,
+      "duration_ms": 29690,
+      "markers": "[KERNEL K:Y E:Y R:Y N:Y]",
+      "honest_finding": "All 3 expected hardcodes already canonical (rounds 1-9 work). reviewer.md:268 <400 lines per review correctly out-of-scoped (PR-batch metric, not function-size).",
+      "comment": "All canonical state. Pass-state with 0 proposed edits — brief explicitly accepted this."
+    },
+    "T4_recovery": {
+      "outcome": "PASS",
+      "tokens": 121939,
+      "tools": 14,
+      "duration_ms": 103800,
+      "markers": "[KERNEL K:Y E:Y R:Y N:Y]",
+      "honest_finding": "Initial audit exit 1 (1 violation) → identified core/tester.md → applied inheritance blockquote → final audit exit 0. Fixture-tree only; live tree untouched.",
+      "comment": "Clean recovery cycle. Required AGENTS_ROOT-fallback patch (audit script doesn't honor env var)."
+    },
+    "T5_synthesis": {
+      "outcome": "PASS",
+      "tokens": 131506,
+      "tools": 19,
+      "duration_ms": 140654,
+      "markers": "[KERNEL K:Y E:Y R:Y N:Y]+[V:]",
+      "honest_finding": "Top-3: 🟠 court-architecture 'typed contracts' fiction (NEW finding); 🟡 analyst↔code-analyzer description redundancy; 🟡 hardcoded max_* drift across 6 agent files. Confirmed protocol-inheritance + name-collision dimensions are now CLEAN.",
+      "comment": "Surfaced a NEW high-priority finding: court-architecture.md's 'typed contracts' claim is documentation fiction (no parser/schema). Same fiction class as the retired Inherits: field. Single-sentence fix."
+    },
+    "T6_engineering": {
+      "outcome": "PASS",
+      "tokens": 132625,
+      "tools": 17,
+      "duration_ms": 173733,
+      "markers": "[KERNEL K:Y E:Y R:Y N:Y]+[PROPOSAL]+[ALERT]",
+      "honest_finding": "Canonical protocol-watch.mjs (r1, 163 lines) verified equivalent to spec — left untouched per round-10 meta. Built T6-dom-r8 fixture set (3 files), appended SUITE.md round-fixture annotation. Both --self-test and --once exit 0.",
+      "comment": "EXCEPTIONAL token efficiency: 132k vs prior T6 rounds at 800k-1M. Agent recognized canonical-equivalence and stopped at fixture+annotation. Surfaced [ALERT:Git Bash MSYS path translation trap] as future-round caveat."
+    },
+    "T7_scorecard": {
+      "outcome": "PASS",
+      "tokens": 149511,
+      "tools": 12,
+      "duration_ms": 263513,
+      "markers": "[KERNEL K:Y E:Y R:Y N:Y]+[PROPOSAL]+[ALERT]",
+      "honest_finding": "scorecard-dom-r8.{mjs,md} created. 8 source files read. Determinism verified (MD5 match across 2 runs). DQ surfaced in 4 places. Differentiators vs prior rounds: Discrimination Axis verdict trace, ASCII variance sparkline, explicit stability classifier labels, Per-Round Cohort axis.",
+      "comment": "Architectural choice: markdown + paired generator script + regenerate-on-run. Surfaced [ALERT:90% logical overlap across r5-r8 scorecard scripts — extract scorecard-lib.mjs in r9]."
+    }
+  },
+  "round_10_aggregate": {
+    "trials": 7,
+    "PASS": 7,
+    "DQ": 0,
+    "FAIL": 0,
+    "pass_rate_pct": 100.0,
+    "total_tokens": 879802,
+    "total_tools": 74,
+    "max_duration_ms": 263513,
+    "wall_clock_min_parallel": 4.4
+  },
+  "marker_discipline_measurement": {
+    "hypothesis_under_test": "clean-session orchestrator with simplified [V:]-based persona will shift subagent marker emission to all-[V:]-no-[KERNEL]",
+    "verdict": "FALSIFIED",
+    "evidence": {
+      "trials_emitting_KERNEL": "7/7 (100%)",
+      "trials_emitting_V_alongside_KERNEL": "2/7 (28.6%) — T1, T5",
+      "trials_emitting_V_without_KERNEL": "0/7 (0%)"
+    },
+    "causal_explanation": "Each task brief's first line literally says 'emit [PROPOSAL:], [ALERT:], [KERNEL K:Y/N E:Y/N R:Y/N N:Y/N] markers per .claude/agents/protocols/proactive-protocol.md'. Subagents obey direct prompt instructions over implicit-persona muscle memory. Session restart of the orchestrator changes nothing because subagents always loaded fresh per the handoff. Marker discipline is dominated by brief instructions, not persona simplification.",
+    "implication": "If marker discipline is the goal, fix the BRIEFS not the persona. The bench instrumentation (tasks/T1-T7.md) still asks for [KERNEL] markers. Update brief language to match the v3.0 contract."
+  },
+  "new_findings_from_round_10": [
+    "T5 NEW: court-architecture.md 'typed contracts in shared memory' claim is documentation fiction (no Zod schema, no parser). Same class as retired Inherits: field. 🟠 High, S effort, single-file textual edit.",
+    "T5 NEW: court-architecture.md vs supreme-dominator.md disagree on whether 'goal-planner' is in Stratega's roster (Court yes, Dominator no). 🟡 Medium drift.",
+    "T2 NEW: residual byte-identical description: string between analyst.md and analyze-code-quality.md is the cognitive collision (the spawn-name resolver is fine).",
+    "T6 NEW: protocol-watch.mjs has hardcoded fixtures/T6/ path (line 111) — should read PROTOCOL_WATCH_FIXTURE_DIR env var for round-N harnesses.",
+    "T6 NEW: Git Bash MSYS path translation trap — node receiving $HOME/... in a JSON string mangles into C:\\c\\Users\\... Use cygpath -w or pure forward-slash absolute Windows paths in any future round harness.",
+    "T7 NEW: r5-r8 scorecard scripts have ~90% logical overlap. Extract scorecard-lib.mjs (mean/stdev/cv/sparkline/classifyVerdict) in r9.",
+    "T1 META: brief asserts 7 clauses; current protocol defines 3 + V marker. Bench briefs are stale relative to the simplified persona's contract."
+  ],
+  "round_8_vs_round_10_comparison": {
+    "outcome_difference": "Both rounds 7/7 PASS, 0 DQ — outcome cells identical.",
+    "marker_difference": "Round 8 (per handoff finding): all 7 emitted [KERNEL] muscle-memory. Round 10: same — all 7 emit [KERNEL]; 2 also add [V:]. Session restart did NOT shift discipline.",
+    "cost_difference": "Round 10 wave: ~880k tokens. Round 8 estimate (similar shape): comparable. T6 in round 10 was unusually cheap (132k vs 800k-1M) because canonical-equivalent declaration shortened the trial.",
+    "tree_state_difference": "Round 9 cleanup applied between rounds. T2 + T3 premises now resolved; agents reported faithfully. T5 dimensions 1+2 (inheritance + collisions) are now CLEAN — frees future T5 trials to focus on remaining dimensions (3 redundancy, 4 hardcodes, 6 documentation-fiction)."
+  },
+  "totals_through_round_10": {
+    "trials": 100,
+    "PASS": 98,
+    "DQ": 1,
+    "honest_refusals_as_DQ": 1,
+    "pass_rate_pct": 98.0,
+    "tokens_estimated": "~10.9M cumulative across 10 rounds"
+  },
+  "next_actions": [
+    "If pursuing marker-discipline cleanup: update tasks/T1-T7.md brief language from [KERNEL K:Y/N...] to [V: <success-condition>].",
+    "If pursuing new T5 findings: address court-architecture.md typed-contracts fiction (🟠 High, S) as next round 11 cleanup wave.",
+    "Optional r9 deliverable per T7 ALERT: extract scorecard-lib.mjs to deduplicate r5-r8 scripts.",
+    "Optional T6 PROPOSAL: drop hardcoded fixtures/T6/ in protocol-watch.mjs:111, read PROTOCOL_WATCH_FIXTURE_DIR env var."
+  ]
+}
