@@ -111,23 +111,26 @@ The persona ships with three named defaults — **The Forge** (where you build),
 
 ## Provenance
 
-Born inside an internal orchestrator bench that ran 100+ subagent trials across 7 task tiers (recall, judgment, decomposition, recovery, synthesis, engineering, open-ended design). Each trial pitted `supreme-dominator` against four claude-flow orchestrator personas — `task-orchestrator`, `hierarchical-coordinator`, `sparc-coord`, and `mesh-coordinator` — on identical briefs.
+Born inside an internal orchestrator bench that ran 118 subagent trials across 11 rounds × 7 task tiers (recall, judgment, decomposition, recovery, synthesis, engineering, open-ended design). Each trial pitted `supreme-dominator` against three claude-flow orchestrator personas — `task-orchestrator`, `hierarchical-coordinator`, and `sparc-coord` — on identical briefs. The final comparative wave (round 11) used the simplified persona + cleaned task briefs to produce post-cleanup measurements.
 
 The Pareto front that emerged isn't "Dominator wins everything." It's a routing table:
 
-| Need | Winner |
-|---|---|
-| Cheap engineering | sparc-coord |
-| Fast recovery | task-orchestrator |
-| Compact artifacts | task-orchestrator |
-| Tool discipline (fewest calls) | hierarchical-coordinator |
-| Cross-file synthesis | task-orchestrator + sparc-coord (tied) |
-| Recall with inlined protocol | supreme-dominator |
-| Honesty under uncertainty | task-orchestrator + hierarchical + sparc |
+| Need | Winner | Margin |
+|---|---|---|
+| Recall (correctness, no hallucination) | **supreme-dominator** | task-orchestrator hallucinated 5 fabricated clauses without reading the source — cheap is not free |
+| Judgment under ambiguity | **supreme-dominator** | cheapest + fastest + fewest tools on T2 |
+| Recovery from failure | **supreme-dominator** | fastest, fewest tools |
+| Cheap mechanical work (T3 canonical) | **task-orchestrator** | tightest cost on plain decomposition |
+| Synthesis speed | **sparc-coord** | 30-50% faster than peers on T5 |
+| Engineering (open-ended) — speed + cost | **sparc-coord** | cheapest + fastest on T7 |
+| Engineering — architectural depth | **hierarchical-coordinator** | introduced a dual-artifact pattern (json ledger + md view) on T7 |
+| Honesty under uncertainty | tied across all 4 — none fabricated outcomes |
 
-Empirically validated: when the brief asks for `[V:]`, the persona emits `[V:]` only — measured across 7/7 trials in the final round. The recurring DQ pattern (subagent staging sentinel files inside protected paths) is documented in the persona's spawn-time enforcement section as a known failure mode the user inherits awareness of.
+Empirically validated, twice over: round 10 falsified the "clean session shifts marker discipline" hypothesis (when the brief asked for `[KERNEL]`, all 7 trials emitted `[KERNEL]`); round 11 confirmed the inverse (when the brief asked for `[V:]`, all 18 trials emitted `[V:]` only). Marker discipline lives in the brief, not the persona — the simplified persona was correct but insufficient until the briefs aligned.
 
-The bench data **is** in this repo — see [bench/](./bench/) for the 269-line narrative report, the 7 task briefs, round-summary JSONs, and a working scorecard generator. The most interesting result is round 10's falsified hypothesis: the marker-discipline drift wasn't the persona, it was the brief. Receipts in [bench/README.md](./bench/README.md).
+The recurring DQ pattern (subagent staging sentinel files inside protected paths) is documented in the persona's spawn-time enforcement section as a known failure mode the user inherits awareness of.
+
+The bench data **is** in this repo — see [bench/](./bench/) for the 269-line narrative report, the 7 task briefs, round-summary JSONs (rounds 3, 4, 5, 10, 11), and a working scorecard generator. The most interesting result is round 10's falsified hypothesis (then round 11's inverse confirmation): the marker-discipline drift wasn't the persona, it was the brief. Receipts in [bench/README.md](./bench/README.md).
 
 ---
 

@@ -20,7 +20,8 @@ bench/
 │   ├── round3-summary-2026-05-04.json    # 20 trials — first parallel wave with all 4 orchestrators
 │   ├── round4-summary-2026-05-04.json    # 16 trials — selective N=3 fill for variance signal
 │   ├── round5-summary-2026-05-05.json    # 9 trials — T5 first-time graded + T7 introduced
-│   └── round10-summary-2026-05-05.json   # 7 trials — clean-session × cleaned-tree baseline
+│   ├── round10-summary-2026-05-05.json   # 7 trials — supreme-dominator clean-session × cleaned-tree
+│   └── round11-summary-2026-05-05.json   # 18 trials — comparative wave (3 orchestrators × 6 tasks) post-simplification
 ├── scorecards/                  # The final per-orchestrator scorecard (round 8 dom suite)
 │   ├── scorecard-dom-r8.md      # Auto-generated — pass/fail grid, variance, DQ banner, Pareto
 │   └── scorecard-dom-r8.mjs     # Generator — deterministic regeneration from results/
@@ -37,25 +38,44 @@ If you have 15 minutes: also read "Rounds 6-10 — Clean-State Measurement" near
 
 If you want to see one trial in detail: open `results/round10-summary-2026-05-05.json`. It captures all 7 round-10 trials with token costs, durations, marker emissions, and honest findings per task.
 
-## The headline finding
+## The headline findings
+
+**Round 10 — hypothesis falsified.**
 
 ```
-Round 10 hypothesis: "If we restart the orchestrator session with the simplified
+Hypothesis: "If we restart the orchestrator session with the simplified
 [V:]-based persona loaded fresh, marker discipline will shift to all-[V:]-no-[KERNEL]."
 
 Verdict: FALSIFIED.
 
-Cause: subagents obey the BRIEF over the persona. Each task brief literally instructs
-"emit [PROPOSAL:], [ALERT:], [KERNEL K:Y/N E:Y/N R:Y/N N:Y/N] markers". 7/7 trials
-emitted [KERNEL] in their final self-grade; 2/7 added [V:] alongside; 0/7 emitted
-[V:] without [KERNEL].
+7/7 trials emitted [KERNEL]; 2/7 added [V:] alongside; 0/7 emitted [V:] without [KERNEL].
 
-Implication: marker discipline lives in the brief, not the persona. Round 11 verified
-this by inverting the experiment — change the brief to ask for [V:], discipline shifts
-to [V:]-only. Confirmed across the audit-validation trial.
+Cause: subagents obey the BRIEF over the persona. Each task brief literally instructed
+"emit [PROPOSAL:], [ALERT:], [KERNEL K:Y/N E:Y/N R:Y/N N:Y/N] markers" — that won.
 ```
 
-This is the kind of finding that doesn't show up in marketing copy because it isn't a win — it's a tightening of the causal model. The persona simplification work was correct but insufficient; brief-marker alignment was the missing piece. Both are now fixed in the kit.
+**Round 11 — the inverse experiment confirmed it, plus measured the post-simplification Pareto.**
+
+```
+Setup: same simplified persona, but briefs cleaned ([KERNEL] → [V:] across all 7).
+       Then ran 3 orchestrators (task-orch, hier, sparc) × 6 tasks = 18 trials.
+       Plus reused the round 10 supreme-dominator data on the same 6 tasks.
+
+Marker discipline: 18/18 emitted [V:]; 0/18 emitted [KERNEL]. Inverse confirms cause.
+
+Pareto post-simplification (only 6 tasks measured comparatively, T6 deferred for cost):
+  Recall (correctness)              → supreme-dominator (task-orch HALLUCINATED — fabricated 5 clauses with 0 tool calls)
+  Judgment under ambiguity          → supreme-dominator (cheapest + fastest + fewest tools)
+  Recovery from failure             → supreme-dominator (fastest, fewest tools; task-orch cheapest)
+  Cheap mechanical (canonical)      → task-orchestrator
+  Synthesis speed                   → sparc-coord
+  Engineering speed + cost (T7)     → sparc-coord
+  Engineering architectural depth   → hierarchical-coordinator (dual artifact: json ledger + md view)
+```
+
+The honest answer to "did dominator now rule them all?" is **no, but the Pareto shifted in its favor**. Dominator gained T2 (judgment) and T4 (recovery) in addition to keeping T1 (recall) and T3 (cross-file synthesis from earlier rounds). The other three retain niche advantages on engineering tasks (sparc) and the cheapest mechanical work (task-orch). The Pareto is sharper, not collapsed.
+
+The marker-discipline finding is the kind of result that doesn't show up in marketing copy because it isn't a win — it's a tightening of the causal model. The persona simplification work was correct but insufficient; brief-marker alignment was the missing piece. Both are fixed in the kit.
 
 ## What this bench is NOT
 

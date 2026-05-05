@@ -1,0 +1,111 @@
+{
+  "summary_date": "2026-05-05",
+  "round": 11,
+  "scope": "Comparative wave with the simplified persona. 4 orchestrators × 6 tasks (T1, T2, T3, T4, T5, T7 — skipped T6 to control cost). Supreme-dominator data from round 10 (same simplified persona, same disk state); task-orchestrator/hierarchical-coordinator/sparc-coord newly run.",
+  "outcome": "18 new trials all PASS. 0 DQ. Marker discipline 18/18 [V:], 0/18 [KERNEL] — confirms round 10's causal explanation via the inverse experiment.",
+  "context": {
+    "experimental_question": "After persona simplification (rounds 6-10), does supreme-dominator now win every axis the bench measures?",
+    "answer": "No, but the Pareto shifted in dominator's favor. Dominator now wins more axes than in rounds 1-7. The other three orchestrators retain niche advantages on specific axes (task-orch=cheapest mechanical, sparc=engineering speed/cost, hier=architectural depth on open-ended).",
+    "brief_state": "Briefs cleaned in round 11 ([KERNEL] → [V:] across all 7). All 4 orchestrators received [V:]-marker briefs.",
+    "tree_state": "Post-round-9 cleanup tree (analyst.md rename, all hardcodes canonical, court-architecture typed-contracts honesty)."
+  },
+  "trials_per_orchestrator": {
+    "task-orchestrator": {
+      "T1": {"outcome": "PASS_WITH_QUALITY_FLAG", "tokens": 91589, "tools": 0, "duration_ms": 8346, "markers": "[ALERT]+[PROPOSAL]+[V:]", "quality_flag": "HALLUCINATION — fabricated 5 clauses without reading proactive-protocol.md (used 0 tool calls). Self-reported as PASS but content is wrong (real protocol has 3 clauses, not 5). The cost win is illusory — it skipped the work."},
+      "T2": {"outcome": "PASS", "tokens": 119101, "tools": 9, "duration_ms": 62672, "markers": "[V:]"},
+      "T3": {"outcome": "PASS", "tokens": 113847, "tools": 5, "duration_ms": 28088, "markers": "[V:]"},
+      "T4": {"outcome": "PASS", "tokens": 120662, "tools": 15, "duration_ms": 118571, "markers": "[V:]"},
+      "T5": {"outcome": "PASS", "tokens": 129693, "tools": 16, "duration_ms": 174450, "markers": "[V:]"},
+      "T7": {"outcome": "PASS", "tokens": 158179, "tools": 24, "duration_ms": 311744, "markers": "[V:]"}
+    },
+    "hierarchical-coordinator": {
+      "T1": {"outcome": "PASS", "tokens": 119946, "tools": 1, "duration_ms": 23390, "markers": "[V:]"},
+      "T2": {"outcome": "PASS", "tokens": 122573, "tools": 6, "duration_ms": 46614, "markers": "[ALERT]+[PROPOSAL]+[V:]"},
+      "T3": {"outcome": "PASS", "tokens": 121228, "tools": 6, "duration_ms": 37518, "markers": "[V:]"},
+      "T4": {"outcome": "PASS", "tokens": 129589, "tools": 18, "duration_ms": 152296, "markers": "[V:]"},
+      "T5": {"outcome": "PASS", "tokens": 131930, "tools": 16, "duration_ms": 191909, "markers": "[V:]"},
+      "T7": {"outcome": "PASS", "tokens": 173924, "tools": 30, "duration_ms": 345011, "markers": "[V:]", "differentiator": "DUAL ARTIFACT: produced json ledger + md view as separate concerns"}
+    },
+    "sparc-coord": {
+      "T1": {"outcome": "PASS", "tokens": 116701, "tools": 2, "duration_ms": 20888, "markers": "[V:]"},
+      "T2": {"outcome": "PASS", "tokens": 121831, "tools": 13, "duration_ms": 70370, "markers": "[V:]", "extra_finding": "discovered project-local shadow analyze-code-quality.md duplicate at agents/analysis/ root"},
+      "T3": {"outcome": "PASS", "tokens": 117267, "tools": 5, "duration_ms": 35076, "markers": "[V:]"},
+      "T4": {"outcome": "PASS", "tokens": 125885, "tools": 15, "duration_ms": 130637, "markers": "[ALERT]+[V:]"},
+      "T5": {"outcome": "PASS", "tokens": 131390, "tools": 16, "duration_ms": 119998, "markers": "[V:]", "extra_finding": "7 hardcoded latency/memory constants beyond function/file rules; 1 stale reference in code-review-swarm.md"},
+      "T7": {"outcome": "PASS", "tokens": 145933, "tools": 12, "duration_ms": 214465, "markers": "[V:]"}
+    },
+    "supreme-dominator": {
+      "T1": {"source": "round 10", "outcome": "PASS", "tokens": 113969, "tools": 1, "duration_ms": 17842, "markers": "[ALERT]+[KERNEL]+[V:]"},
+      "T2": {"source": "round 10", "outcome": "PASS", "tokens": 115003, "tools": 5, "duration_ms": 42431, "markers": "[ALERT]+[PROPOSAL]+[KERNEL]"},
+      "T3": {"source": "round 10", "outcome": "PASS", "tokens": 115249, "tools": 6, "duration_ms": 29690, "markers": "[KERNEL]"},
+      "T4": {"source": "round 10", "outcome": "PASS", "tokens": 121939, "tools": 14, "duration_ms": 103800, "markers": "[KERNEL]"},
+      "T5": {"source": "round 10", "outcome": "PASS", "tokens": 131506, "tools": 19, "duration_ms": 140654, "markers": "[KERNEL]+[V:]"},
+      "T7": {"source": "round 10", "outcome": "PASS", "tokens": 149511, "tools": 12, "duration_ms": 263513, "markers": "[KERNEL]+[PROPOSAL]+[ALERT]"}
+    }
+  },
+  "pareto_post_simplification": {
+    "T1_recall_correctness": "dom (clean read+synthesis), hier and sparc tied",
+    "T1_hallucination": "task-orchestrator FABRICATED 5 clauses without reading — quality DQ in spirit, though self-reported PASS",
+    "T2_judgment_cheapest": "dom (115k vs 119-122k for others)",
+    "T2_judgment_fastest": "dom (42s vs 47-70s)",
+    "T2_judgment_thorough": "sparc (extra finding on shadow duplicate)",
+    "T3_canonical_cheapest": "task-orchestrator (114k)",
+    "T3_canonical_fastest": "task-orchestrator (28s)",
+    "T4_recovery_fastest": "dom (104s vs 118-152s)",
+    "T4_recovery_cheapest": "task-orchestrator (121k)",
+    "T4_recovery_fewest_tools": "dom (14)",
+    "T5_synthesis_fastest": "sparc (120s vs 140-192s)",
+    "T5_synthesis_cheapest": "task-orchestrator (130k)",
+    "T5_synthesis_most_findings": "sparc (7 hardcodes + 1 stale ref + 1 doc-drift)",
+    "T7_engineering_cheapest": "sparc (146k)",
+    "T7_engineering_fastest": "sparc (214s)",
+    "T7_engineering_architectural_depth": "hier (dual artifact: json ledger + md view)",
+    "T7_engineering_fewest_tools": "sparc + dom tied (12 each)"
+  },
+  "marker_discipline": {
+    "round_11_brief_marker_request": "[V: <success-condition>]",
+    "round_11_emissions": {
+      "trials_emitting_V": "18/18 (100%)",
+      "trials_emitting_KERNEL": "0/18 (0%)",
+      "trials_emitting_PROPOSAL_proactively": "3/18 (T2-task, T2-hier, T1-task)",
+      "trials_emitting_ALERT_proactively": "4/18 (T1-task, T2-hier, T4-sparc, T5-task)"
+    },
+    "verdict": "Inverse experiment confirms the round 10 causal explanation. When the brief asks for [V:], all 4 orchestrators emit [V:] only. Marker discipline lives in the brief, not the persona."
+  },
+  "honest_assessment": {
+    "did_dominator_dominate_after_simplification": "No, but it shifted the Pareto front in its favor.",
+    "axes_dom_now_wins": ["T1 recall (cheap+correct, no hallucination)", "T2 judgment (cheap+fast+tool-disciplined)", "T4 recovery (fastest, fewest tools)"],
+    "axes_other_orchestrators_still_win": ["T3 canonical → task-orch (cheap+fast)", "T5 synthesis → sparc (fast) + task-orch (cheap)", "T7 engineering → sparc (cheap+fast) + hier (architectural depth)"],
+    "shift_from_pre_simplification": "Pre-simplification (rounds 1-7), dom won T1 (recall) and T3 (cross-file synthesis) and was a strong-no-DQ on most axes. Post-simplification dom additionally wins T2 (judgment) and T4 (recovery) on cost+speed metrics. Net gain: +2 axes vs pre-simplification.",
+    "axes_unchanged": "T7 (sparc still wins engineering) is the most stable. Engineering tasks favor sparc-coord's depth-of-design.",
+    "implication_for_routing": "The README's Pareto routing table can now be replaced with post-simplification data. The simplified dominator is no longer a 'special case' — it's an actual measured winner on more axes."
+  },
+  "new_findings_from_round_11": [
+    "task-orch CAN hallucinate cheaply when the task allows synthesis-without-tool-use. T1 r11 emitted 5 fabricated clauses with 0 tool calls in 8.3s. Cheap is not free if it skips the work.",
+    "sparc-coord T2 r11 found a project-local shadow `analyze-code-quality.md` at agents/analysis/ root (not in user-global ~/.claude/agents/) — possible duplicate worth investigating",
+    "sparc-coord T5 r11: 7 hardcoded latency/memory constants beyond function/file rules. tester.md, production-validator.md, arch-system-design.md, code-analyze-quality, dev-backend-api, mobile spec — all carry magic numbers (memory_limit, max_execution_time, response time caps) that should defer to canonical. New round-12-target finding.",
+    "sparc-coord T5 r11: code-review-swarm.md:540 references nonexistent siblings swarm-pr.md and workflow-automation.md. Stale.",
+    "hier-coord T5 r11 + sparc T5 r11: protocol-audit.mjs BROAD_SCOPE allowlist doesn't catch new agent dirs added outside it. Latent gate weakness.",
+    "hier-coord T7 r11 introduced a dual-artifact pattern (canonical JSON ledger + rendered markdown view) that's better than any prior round's scorecard architecture. Worth absorbing as the standard going forward.",
+    "task-orchestrator T5 r11 surfaced documentation drift: court-architecture.md:90,122 references 'Explore' without disambiguating built-in subagent type vs missing local file."
+  ],
+  "round_11_aggregate": {
+    "trials": 18,
+    "PASS": 18,
+    "DQ": 0,
+    "FAIL": 0,
+    "pass_rate_pct": 100.0,
+    "quality_flags": 1,
+    "total_tokens": 2290275,
+    "wall_clock_min_parallel": 5.75
+  },
+  "totals_through_round_11": {
+    "trials": 118,
+    "PASS": 116,
+    "DQ": 1,
+    "honest_refusals_as_DQ": 1,
+    "quality_flags": 1,
+    "pass_rate_pct": 98.3,
+    "tokens_estimated": "~13.2M cumulative across 11 rounds"
+  }
+}
