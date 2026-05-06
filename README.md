@@ -18,6 +18,8 @@ The persona names the success condition before doing anything else. Subagents in
 
 ## What 4D looks like on a real task
 
+DESIGN:
+
 ```
 You: /dominator extract JWT verification into its own service in the auth module
 
