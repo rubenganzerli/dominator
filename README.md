@@ -10,7 +10,7 @@ Or you can install one discipline layer that turns every task into the same shap
 
 ## What this is
 
-A `/dominator` slash command for Claude Code. It gives every task a 4-phase structure (Draft → Devise → Decide), enforces a single marker contract across every spawned subagent, and ships an audit script that ratchets the contract so it cannot quietly slip back.
+A `/dominator` slash command for Claude Code. It gives every task a 4-phase structure (Draft → Devise → Decide) = Design, enforces a single marker contract across every spawned subagent, and ships an audit script that ratchets the contract so it cannot quietly slip back.
 
 The persona names the success condition before doing anything else. Subagents inherit one protocol. Drift is caught by a script that exits non-zero in CI.
 
