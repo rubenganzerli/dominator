@@ -1,5 +1,7 @@
 # Start-context evaluation: what each piece is actually worth
 
+> Windows: see [START-CONTEXT-EVAL.windows.md](./START-CONTEXT-EVAL.windows.md). Same method, with tested PowerShell commands.
+
 Everything loaded at session start costs tokens and attention on every turn. This guide measures each piece by results, on your own machine, and keeps only what earns its place.
 
 **Rule:** a piece of context stays only if it measurably improves results or lowers cost on your real work. Otherwise delete it or move it somewhere cheaper.
@@ -30,7 +32,7 @@ Write down every item, grouped by how it loads:
 
 ## 2. Three questions per item
 
-1. **Cost:** what does it add to every turn? Compare the `usage` totals of a trivial prompt with and without it, both runs warmed.
+1. **Cost:** what does it add to every turn? Compare the `usage` totals of a trivial prompt with the item on and off, changing nothing else. The counts are exact and repeatable. Measured here: 20 account and user skills listed = +3,001 tokens per turn (about 150 each), and the merged skill body always loaded = +882.
 2. **Trigger** (skills and tools only): does it fire when it should, and stay quiet otherwise? Count `Skill` or `tool_use` events in the stream. An item that never fires is pure cost. It's the first to delete.
 3. **Effect:** when it's used, are results better? Answer this with an A/B on tasks where it *should* matter, using checks that can fail.
 
@@ -48,7 +50,7 @@ Isolation flags, checked against the `init` event on Claude Code 2.1.281:
 
 | Flag | Effect (verified) |
 |---|---|
-| `--disable-slash-commands` | Skills: 40 → 0 |
+| `--disable-slash-commands` | Skills: 40 → 0. Isolates behavior only: it *adds* 2,913 tokens, so it's not a cost baseline |
 | `--setting-sources project` | Drops user and account skills: 40 → 20 |
 | `--strict-mcp-config --mcp-config '{"mcpServers":{}}'` | No MCP servers except those given |
 | `--append-system-prompt-file <f>` | Adds one file of context (`CLAUDE.md`, a skill body) |

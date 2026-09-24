@@ -11,13 +11,18 @@
 //   node bench/ablate.mjs bench/ablation/plan.json            # run
 //   node bench/ablate.mjs bench/ablation/plan.json --dry-run  # print commands only
 //
+// Env-var seam: CLAUDE_CMD — the claude launcher as a JSON argv array. Default
+// ["claude"] (native installs, incl. claude.exe on Windows). For an npm install on
+// Windows, whose claude.cmd shim can't be spawned without a shell, point it at
+// Node directly: CLAUDE_CMD='["node","C:/Users/YOU/AppData/Roaming/npm/node_modules/@anthropic-ai/claude-code/cli.js"]'
+//
 // Plan file: { "runs": 3, "repo": ".", "out": "bench/ablation/out",
 //              "common_args": [...], "arms": [{ "name", "args", "expect" }],
 //              "tasks": [{ "id", "prompt", "checks": [...] }], "warmup": true }
 // warmup: one unrecorded run per task×arm first, so cached-prompt pricing doesn't
 // favour whichever arm happens to run after another one with the same context.
 // Check kinds: { "name", "regex" } · { "name", "not_regex" } · { "name", "max_words" }
-//              · { "name", "cmd" }  (shell, run in the run's repo copy; exit 0 = pass)
+//              · { "name", "cmd" }  (system shell — sh or cmd.exe — in the run's repo copy; exit 0 = pass)
 // `expect` (optional): { "skills": [...], "mcp": [...], "agents": [...] } that the
 // init event must list — and { "absent_skills": [...] } that it must not. A run
 // whose loaded context doesn't match is marked INVALID and excluded: isolation is
@@ -36,6 +41,8 @@ const runs = plan.runs ?? 3;
 const repo = resolve(plan.repo ?? '.');
 const out = resolve(plan.out ?? 'bench/ablation/out');
 const common = plan.common_args ?? ['--no-session-persistence'];
+const [claudeBin, ...claudePre] = process.env.CLAUDE_CMD ? JSON.parse(process.env.CLAUDE_CMD) : ['claude'];
+const isGit = s => /[\\/]\.git([\\/]|$)/.test(s);
 
 function parseStream(stdout) {
   const r = { loaded: {}, skillsFired: [], result: '', cost: 0, ms: 0, turns: 0, tokens: 0 };
@@ -77,7 +84,7 @@ function grade(checks, text, cwd) {
     if (c.regex) passed = new RegExp(c.regex, 'is').test(text);
     else if (c.not_regex) passed = !new RegExp(c.not_regex, 'is').test(text);
     else if (c.max_words) passed = text.split(/\s+/).filter(Boolean).length <= c.max_words;
-    else if (c.cmd) passed = spawnSync('sh', ['-c', c.cmd], { cwd }).status === 0;
+    else if (c.cmd) passed = spawnSync(c.cmd, { cwd, shell: true }).status === 0; // sh on POSIX, cmd.exe on Windows
     return { name: c.name, passed: !!passed };
   });
 }
@@ -87,10 +94,11 @@ for (const task of plan.tasks) {
   for (const arm of plan.arms) {
     for (let n = plan.warmup ? 0 : 1; n <= runs; n++) {
       const args = ['-p', task.prompt, '--output-format', 'stream-json', '--verbose', ...common, ...(arm.args ?? [])];
-      if (dry) { console.log(`[${task.id} · ${arm.name} · ${n}] claude ${args.map(a => JSON.stringify(a)).join(' ')}`); continue; }
+      if (dry) { console.log(`[${task.id} · ${arm.name} · ${n || 'warmup'}] ${[claudeBin, ...claudePre].join(' ')} ${args.map(a => JSON.stringify(a)).join(' ')}`); continue; }
       const cwd = mkdtempSync(join(tmpdir(), 'ablate-'));
-      cpSync(repo, cwd, { recursive: true, filter: s => !s.includes('/.git') && !s.startsWith(out) });
-      const p = spawnSync('claude', args, { cwd, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024, timeout: (plan.timeout_s ?? 900) * 1000 });
+      cpSync(repo, cwd, { recursive: true, filter: s => !isGit(s) && !s.startsWith(out) });
+      const p = spawnSync(claudeBin, [...claudePre, ...args], { cwd, encoding: 'utf8', maxBuffer: 256 * 1024 * 1024, timeout: (plan.timeout_s ?? 900) * 1000 });
+      if (p.error?.code === 'ENOENT') { console.error(`ERROR: can't launch ${claudeBin}. Set CLAUDE_CMD (see header).`); process.exit(2); }
       if (n === 0) { rmSync(cwd, { recursive: true, force: true }); continue; } // warm-up: primes the prompt cache, not recorded
       const r = parseStream(p.stdout ?? '');
       const iso = isolationErrors(r.loaded, arm.expect);

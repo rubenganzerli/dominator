@@ -109,6 +109,8 @@ rsync -a --include='*/' --include='*.md' --exclude='*' ~/.claude/agents/ agents/
 git add agents && git commit -m "Mirror local agents"
 ```
 
+On Windows, use the PowerShell version in [bench/START-CONTEXT-EVAL.windows.md §4](./bench/START-CONTEXT-EVAL.windows.md#4-mirror-local-agents-into-the-repo-install-step-4b).
+
 Then audit the repo copy anywhere — locally or in the cloud:
 
 ```bash
