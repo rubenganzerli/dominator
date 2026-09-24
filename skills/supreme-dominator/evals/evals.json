@@ -1,0 +1,47 @@
+{
+  "skill_name": "supreme-dominator",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Audit this orchestration kit (the directory you're in) for inconsistencies between its docs, specs and scripts. Give me a prioritized fix list I can act on today.",
+      "expected_output": "Ranked, verified list of real inconsistencies with file:line evidence and one first action.",
+      "files": [],
+      "expectations": [
+        "Every file:line reference points at a real line",
+        "Gives at least 3 file:line references",
+        "Flags grader [KERNEL] vs [V:] mismatch",
+        "Flags the missing watcher self-test fixture",
+        "Fix list is ranked",
+        "Names one concrete first action",
+        "Repo left unmodified"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "I want CI on this repo that runs the protocol audit and the T5 grader on every PR. Plan it \u2014 don't implement anything. I'll hand your plan to a cheaper model to execute.",
+      "expected_output": "A sequenced plan of small units, each with inputs/outputs and a checkable done-condition, flagging blockers found in the repo.",
+      "files": [],
+      "expectations": [
+        "Every unit has a checkable done-condition",
+        "Order and dependencies between units are explicit",
+        "Flags that the audit exits 2 in the repo",
+        "Flags that the T5 grader needs an output file",
+        "Flags a pre-existing defect",
+        "Every file:line reference points at a real line",
+        "Nothing implemented"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "quick one: what does exit code 2 mean for scripts/protocol-audit.mjs?",
+      "expected_output": "Short correct answer: infrastructure error (invalid flag, missing scope dir, or filesystem error), no ceremony.",
+      "files": [],
+      "expectations": [
+        "Names invalid flag, missing scope dir, and filesystem error",
+        "120 words or fewer",
+        "No protocol ceremony",
+        "Repo left unmodified"
+      ]
+    }
+  ]
+}

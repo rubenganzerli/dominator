@@ -100,6 +100,25 @@ node ~/.claude/scripts/protocol-watch.mjs --once
 
 To run as a background service: wire it into your shell rc, a systemd unit, or just leave a terminal tab open. It debounces audit calls so it stays cheap.
 
+## Step 4b — (Optional) Make your agents visible to cloud sessions
+
+Cloud sessions (claude.ai/code) see only the repo and your account-synced skills — never `~/.claude/agents/`. To give them your agents (JEV included), mirror the tree into the repo from your machine and commit it:
+
+```bash
+rsync -a --include='*/' --include='*.md' --exclude='*' ~/.claude/agents/ agents/
+git add agents && git commit -m "Mirror local agents"
+```
+
+On Windows, use the PowerShell version in [bench/START-CONTEXT-EVAL.windows.md §4](./bench/START-CONTEXT-EVAL.windows.md#4-mirror-local-agents-into-the-repo-install-step-4b).
+
+Then audit the repo copy anywhere — locally or in the cloud:
+
+```bash
+node scripts/protocol-audit.mjs --broad --root agents
+```
+
+The root resolves as `--root <dir>`, then `PROTOCOL_AGENTS_ROOT`, then `~/.claude/agents`. The watcher reads the same variable.
+
 ## Step 5 — Use it
 
 In any Claude Code session:

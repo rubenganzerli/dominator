@@ -1,0 +1,139 @@
+{
+  "runs": 3,
+  "warmup": true,
+  "repo": ".",
+  "out": "bench/ablation/out",
+  "timeout_s": 900,
+  "common_args": [
+    "--no-session-persistence",
+    "--disallowedTools",
+    "Edit",
+    "Write",
+    "NotebookEdit"
+  ],
+  "arms": [
+    {
+      "name": "baseline",
+      "args": [
+        "--disable-slash-commands",
+        "--setting-sources",
+        "project",
+        "--strict-mcp-config",
+        "--mcp-config",
+        "{\"mcpServers\":{}}"
+      ],
+      "expect": {
+        "absent_skills": [
+          "dominator"
+        ]
+      }
+    },
+    {
+      "name": "+claude-md",
+      "args": [
+        "--disable-slash-commands",
+        "--setting-sources",
+        "project",
+        "--strict-mcp-config",
+        "--mcp-config",
+        "{\"mcpServers\":{}}",
+        "--append-system-prompt-file",
+        "/Users/YOU/.claude/CLAUDE.md"
+      ]
+    },
+    {
+      "name": "+dominator-forced",
+      "args": [
+        "--disable-slash-commands",
+        "--setting-sources",
+        "project",
+        "--strict-mcp-config",
+        "--mcp-config",
+        "{\"mcpServers\":{}}",
+        "--append-system-prompt-file",
+        "skills/supreme-dominator/SKILL.md"
+      ]
+    },
+    {
+      "name": "+honcho",
+      "args": [
+        "--disable-slash-commands",
+        "--setting-sources",
+        "project",
+        "--strict-mcp-config",
+        "--mcp-config",
+        "/Users/YOU/.claude/honcho.mcp.json"
+      ],
+      "expect": {
+        "mcp": [
+          "honcho"
+        ]
+      }
+    },
+    {
+      "name": "full",
+      "args": [],
+      "expect": {
+        "skills": [
+          "dominator"
+        ]
+      }
+    }
+  ],
+  "tasks": [
+    {
+      "id": "kit-drift-audit",
+      "prompt": "Audit this orchestration kit for inconsistencies between its docs, specs and scripts. Give me a prioritized fix list I can act on today.",
+      "checks": [
+        {
+          "name": "ranked list",
+          "regex": "P0|(^|\\n)\\s*\\**1\\."
+        },
+        {
+          "name": ">=3 file:line refs",
+          "regex": "(\\.\\w{2,4}:\\d+[\\s\\S]*){3}"
+        },
+        {
+          "name": "flags grader KERNEL vs [V:]",
+          "regex": "KERNEL[\\s\\S]{0,300}(grader|T5)|(grader|T5)[\\s\\S]{0,300}KERNEL"
+        }
+      ]
+    },
+    {
+      "id": "ci-plan",
+      "prompt": "I want CI on this repo that runs the protocol audit and the T5 grader on every PR. Plan it, don't implement. A cheaper model will execute your plan.",
+      "checks": [
+        {
+          "name": "flags audit exit 2 in repo",
+          "regex": "exit(s| code)? ?(=|of)? ?2|scope dir"
+        },
+        {
+          "name": "flags grader needs an output file",
+          "regex": "output[- ]file|<output|fixture"
+        },
+        {
+          "name": "done-condition per unit",
+          "regex": "done[- ]when|pass criteria|acceptance"
+        }
+      ]
+    },
+    {
+      "id": "simple-question",
+      "prompt": "quick one: what does exit code 2 mean for scripts/protocol-audit.mjs?",
+      "checks": [
+        {
+          "name": "correct",
+          "regex": "flag[\\s\\S]*(scope|director)|(scope|director)[\\s\\S]*flag"
+        },
+        {
+          "name": "<=120 words",
+          "max_words": 120
+        },
+        {
+          "name": "no ceremony",
+          "not_regex": "\\b(DRAFT|DEVISE|DECIDE|KERNEL)\\b"
+        }
+      ]
+    }
+  ]
+}
