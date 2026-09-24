@@ -11,7 +11,8 @@
 //   node ~/.claude/scripts/protocol-watch.mjs --self-test  # integration test, exits 0/1
 //
 // Env-var seams (used by --self-test):
-//   PROTOCOL_WATCH_ROOT  — override the watched directory
+//   PROTOCOL_AGENTS_ROOT — override the watched directory (also read by the audit)
+//   PROTOCOL_WATCH_ROOT  — legacy alias for PROTOCOL_AGENTS_ROOT
 //   PROTOCOL_AUDIT_CMD   — override the audit command (JSON array of argv parts)
 
 import { watch, mkdirSync, writeFileSync, unlinkSync, existsSync } from 'node:fs';
@@ -23,11 +24,14 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const DEFAULT_ROOT = process.env.PROTOCOL_WATCH_ROOT
+const DEFAULT_ROOT = process.env.PROTOCOL_AGENTS_ROOT
+  || process.env.PROTOCOL_WATCH_ROOT
   || join(homedir(), '.claude', 'agents');
+// The audit is the sibling script, so the pair works wherever it lives
+// (~/.claude/scripts locally, scripts/ in the repo).
 const DEFAULT_AUDIT = process.env.PROTOCOL_AUDIT_CMD
   ? JSON.parse(process.env.PROTOCOL_AUDIT_CMD)
-  : ['node', join(homedir(), '.claude', 'scripts', 'protocol-audit.mjs'), '--broad'];
+  : ['node', join(__dirname, 'protocol-audit.mjs'), '--broad', '--root', DEFAULT_ROOT];
 const DEBOUNCE_MS = 500;
 
 const VALID_FLAGS = new Set(['--once', '--self-test']);

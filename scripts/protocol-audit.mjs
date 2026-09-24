@@ -14,12 +14,14 @@
 //   node ~/.claude/scripts/protocol-audit.mjs           # tight scope, exits 0 on clean
 //   node ~/.claude/scripts/protocol-audit.mjs --broad   # wide scope, surfaces all gaps
 //   node ~/.claude/scripts/protocol-audit.mjs --json    # machine-readable output
+//   node scripts/protocol-audit.mjs --root agents       # audit another tree (e.g. this repo in a cloud session)
+//
+// Root resolution: --root <dir>  >  PROTOCOL_AGENTS_ROOT  >  ~/.claude/agents
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, relative } from 'node:path';
+import { join, relative, resolve } from 'node:path';
 import { homedir } from 'node:os';
 
-const AGENTS_ROOT = join(homedir(), '.claude', 'agents');
 const PROTOCOL_MARKER = 'Inherits the [Proactive Protocol]';
 
 // Tight scope — directories where I have explicitly patched all agents.
@@ -36,10 +38,21 @@ const ALWAYS_EXCLUDED = new Set([
 
 const VALID_FLAGS = new Set(['--broad', '--json']);
 const rawArgs = process.argv.slice(2);
+const rootIdx = rawArgs.indexOf('--root');
+let rootArg = null;
+if (rootIdx !== -1) {
+  rootArg = rawArgs[rootIdx + 1];
+  if (!rootArg || rootArg.startsWith('--')) {
+    console.error('ERROR: --root needs a directory');
+    process.exit(2);
+  }
+  rawArgs.splice(rootIdx, 2);
+}
+const AGENTS_ROOT = resolve(rootArg || process.env.PROTOCOL_AGENTS_ROOT || join(homedir(), '.claude', 'agents'));
 const unknownFlags = rawArgs.filter(a => !VALID_FLAGS.has(a));
 if (unknownFlags.length > 0) {
   console.error(`ERROR: unknown flag(s): ${unknownFlags.join(', ')}`);
-  console.error(`Valid flags: ${[...VALID_FLAGS].join(', ')}`);
+  console.error(`Valid flags: ${[...VALID_FLAGS].join(', ')}, --root <dir>`);
   process.exit(2);
 }
 const args = new Set(rawArgs);
