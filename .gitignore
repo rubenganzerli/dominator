@@ -11,3 +11,5 @@ node_modules/
 # Personal — never accidentally commit
 *.private.md
 .env*
+bench/ablation/out/
+bench/ablation/plan.json
