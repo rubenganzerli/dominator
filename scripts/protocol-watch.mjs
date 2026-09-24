@@ -135,7 +135,7 @@ async function selfTest() {
   console.log('self-test: baseline clean');
 
   const child = spawn('node', [__filename], {
-    env: { ...process.env, PROTOCOL_WATCH_ROOT: fixtureDir, PROTOCOL_AUDIT_CMD: JSON.stringify(['node', stubAudit, fixtureDir]) },
+    env: { ...process.env, PROTOCOL_AGENTS_ROOT: fixtureDir, PROTOCOL_WATCH_ROOT: fixtureDir, PROTOCOL_AUDIT_CMD: JSON.stringify(['node', stubAudit, fixtureDir]) },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
   let stdout = '', stderr = '';

@@ -1,0 +1,522 @@
+{
+  "metadata": {
+    "skill_name": "supreme-dominator",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "session model (same for all configs)",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-09-24T15:57:30Z",
+    "evals_run": [
+      0,
+      1,
+      2
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 117.7,
+        "tokens": 79917,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Every unit has a checkable done-condition",
+          "passed": true,
+          "evidence": "'Pass criteria' under steps 1-3, Step 5 gate on real PRs"
+        },
+        {
+          "text": "Order and dependencies between units are explicit",
+          "passed": true,
+          "evidence": "'Do the steps in order'; critical path D1 \u2192 step 1 \u2192 step 4"
+        },
+        {
+          "text": "Flags that the audit exits 2 in the repo (scope dirs / agents tree absent)",
+          "passed": true,
+          "evidence": "match: 'exits 2'"
+        },
+        {
+          "text": "Flags that the T5 grader needs an orchestrator output file to grade",
+          "passed": true,
+          "evidence": "match: '<output'"
+        },
+        {
+          "text": "Flags a pre-existing defect (KERNEL/[V:] mismatch or missing self-test fixture)",
+          "passed": true,
+          "evidence": "match: 'KERNEL'"
+        },
+        {
+          "text": "Every file:line reference points at a real line (no fabricated evidence)",
+          "passed": true,
+          "evidence": "0 file:line refs checked; bad: []"
+        },
+        {
+          "text": "Nothing implemented: kit left unmodified",
+          "passed": true,
+          "evidence": "kit identical to base"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 0,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 212.0,
+        "tokens": 151267,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Every file:line reference points at a real line (no fabricated evidence)",
+          "passed": true,
+          "evidence": "22 file:line refs checked; bad: []"
+        },
+        {
+          "text": "Gives at least 3 file:line references",
+          "passed": true,
+          "evidence": "23 file:line refs"
+        },
+        {
+          "text": "Flags grader [KERNEL] marker vs [V:] contract mismatch",
+          "passed": true,
+          "evidence": "match: 'T5 grader still scores `[KERNEL]`, but the T5 spec scores `[V:]`.** grader-T5.mj'"
+        },
+        {
+          "text": "Flags the missing watcher self-test fixture",
+          "passed": true,
+          "evidence": "match: 'self-test'"
+        },
+        {
+          "text": "Fix list is ranked (numbered or P0/P1 tiers)",
+          "passed": true,
+          "evidence": "match: 'P0'"
+        },
+        {
+          "text": "Names one concrete first action",
+          "passed": true,
+          "evidence": "'Today's batch, in order: 1. Scripts (~1h)\u2026' (line 81-83)"
+        },
+        {
+          "text": "Kit left unmodified",
+          "passed": true,
+          "evidence": "kit identical to base"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 24.1,
+        "tokens": 51979,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Correct: names invalid flag, missing scope dir, and filesystem/IO error",
+          "passed": true,
+          "evidence": "all three causes"
+        },
+        {
+          "text": "Answer is 120 words or fewer",
+          "passed": false,
+          "evidence": "187 words"
+        },
+        {
+          "text": "No protocol ceremony (no Draft/Devise/Decide/KERNEL scaffolding)",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Kit left unmodified",
+          "passed": true,
+          "evidence": "kit identical to base"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 104.5,
+        "tokens": 71786,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Every unit has a checkable done-condition",
+          "passed": true,
+          "evidence": "Units table has a DONE-WHEN column for all 4 units, each an exit-code check"
+        },
+        {
+          "text": "Order and dependencies between units are explicit",
+          "passed": true,
+          "evidence": "'1 and 2 independent \u2192 parallel. 3 needs both. 4 needs 3. Critical path 1\u21923\u21924'"
+        },
+        {
+          "text": "Flags that the audit exits 2 in the repo (scope dirs / agents tree absent)",
+          "passed": true,
+          "evidence": "match: 'exits 2'"
+        },
+        {
+          "text": "Flags that the T5 grader needs an orchestrator output file to grade",
+          "passed": true,
+          "evidence": "match: '<output'"
+        },
+        {
+          "text": "Flags a pre-existing defect (KERNEL/[V:] mismatch or missing self-test fixture)",
+          "passed": true,
+          "evidence": "match: 'self-test'"
+        },
+        {
+          "text": "Every file:line reference points at a real line (no fabricated evidence)",
+          "passed": true,
+          "evidence": "0 file:line refs checked; bad: []"
+        },
+        {
+          "text": "Nothing implemented: kit left unmodified",
+          "passed": true,
+          "evidence": "kit identical to base"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 0,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 191.5,
+        "tokens": 120823,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Every file:line reference points at a real line (no fabricated evidence)",
+          "passed": true,
+          "evidence": "11 file:line refs checked; bad: []"
+        },
+        {
+          "text": "Gives at least 3 file:line references",
+          "passed": true,
+          "evidence": "11 file:line refs"
+        },
+        {
+          "text": "Flags grader [KERNEL] marker vs [V:] contract mismatch",
+          "passed": true,
+          "evidence": "match: 'T5. The data is 120s against 140-192s, which is 14-37%.\\n- **README line 120:** s'"
+        },
+        {
+          "text": "Flags the missing watcher self-test fixture",
+          "passed": true,
+          "evidence": "match: 'self-test'"
+        },
+        {
+          "text": "Fix list is ranked (numbered or P0/P1 tiers)",
+          "passed": true,
+          "evidence": "match: 'P0'"
+        },
+        {
+          "text": "Names one concrete first action",
+          "passed": true,
+          "evidence": "'Order of work: Do items 1 \u2192 2 \u2192 3 first' (line 121-122)"
+        },
+        {
+          "text": "Kit left unmodified",
+          "passed": true,
+          "evidence": "kit identical to base"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 15.3,
+        "tokens": 45643,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Correct: names invalid flag, missing scope dir, and filesystem/IO error",
+          "passed": true,
+          "evidence": "all three causes"
+        },
+        {
+          "text": "Answer is 120 words or fewer",
+          "passed": false,
+          "evidence": "134 words"
+        },
+        {
+          "text": "No protocol ceremony (no Draft/Devise/Decide/KERNEL scaffolding)",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Kit left unmodified",
+          "passed": true,
+          "evidence": "kit identical to base"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 134.6,
+        "tokens": 89870,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Every unit has a checkable done-condition",
+          "passed": true,
+          "evidence": "'Check locally' exit codes for steps 1-2; 'Done when' for step 4 covers step 3"
+        },
+        {
+          "text": "Order and dependencies between units are explicit",
+          "passed": true,
+          "evidence": "Numbered steps 1-5 executed in sequence; step 4 verifies end to end"
+        },
+        {
+          "text": "Flags that the audit exits 2 in the repo (scope dirs / agents tree absent)",
+          "passed": true,
+          "evidence": "match: 'exit 2'"
+        },
+        {
+          "text": "Flags that the T5 grader needs an orchestrator output file to grade",
+          "passed": true,
+          "evidence": "match: 'output file'"
+        },
+        {
+          "text": "Flags a pre-existing defect (KERNEL/[V:] mismatch or missing self-test fixture)",
+          "passed": true,
+          "evidence": "match: 'KERNEL'"
+        },
+        {
+          "text": "Every file:line reference points at a real line (no fabricated evidence)",
+          "passed": true,
+          "evidence": "0 file:line refs checked; bad: []"
+        },
+        {
+          "text": "Nothing implemented: kit left unmodified",
+          "passed": true,
+          "evidence": "kit identical to base"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 0,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 7,
+        "failed": 0,
+        "total": 7,
+        "time_seconds": 190.3,
+        "tokens": 143768,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Every file:line reference points at a real line (no fabricated evidence)",
+          "passed": true,
+          "evidence": "12 file:line refs checked; bad: []"
+        },
+        {
+          "text": "Gives at least 3 file:line references",
+          "passed": true,
+          "evidence": "12 file:line refs"
+        },
+        {
+          "text": "Flags grader [KERNEL] marker vs [V:] contract mismatch",
+          "passed": true,
+          "evidence": "match: 'T5 ground truth \"valid for rounds 1\u20135 tree only\".\\n\\n### 16. The T5 grader still s'"
+        },
+        {
+          "text": "Flags the missing watcher self-test fixture",
+          "passed": true,
+          "evidence": "match: 'self-test'"
+        },
+        {
+          "text": "Fix list is ranked (numbered or P0/P1 tiers)",
+          "passed": true,
+          "evidence": "match: 'P0'"
+        },
+        {
+          "text": "Names one concrete first action",
+          "passed": true,
+          "evidence": "'Suggested order for today: 1. #1, #4 in protocol-audit.mjs' (line 156-157)"
+        },
+        {
+          "text": "Kit left unmodified",
+          "passed": true,
+          "evidence": "kit identical to base"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 21.3,
+        "tokens": 47038,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Correct: names invalid flag, missing scope dir, and filesystem/IO error",
+          "passed": true,
+          "evidence": "all three causes"
+        },
+        {
+          "text": "Answer is 120 words or fewer",
+          "passed": false,
+          "evidence": "170 words"
+        },
+        {
+          "text": "No protocol ceremony (no Draft/Devise/Decide/KERNEL scaffolding)",
+          "passed": true,
+          "evidence": "none"
+        },
+        {
+          "text": "Kit left unmodified",
+          "passed": true,
+          "evidence": "kit identical to base"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "old_skill": {
+      "pass_rate": {
+        "mean": 0.9167,
+        "stddev": 0.1443,
+        "min": 0.75,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 117.9333,
+        "stddev": 93.9502,
+        "min": 24.1,
+        "max": 212.0
+      },
+      "tokens": {
+        "mean": 94387.6667,
+        "stddev": 51201.3367,
+        "min": 51979,
+        "max": 151267
+      }
+    },
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.9167,
+        "stddev": 0.1443,
+        "min": 0.75,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 103.7667,
+        "stddev": 88.1023,
+        "min": 15.3,
+        "max": 191.5
+      },
+      "tokens": {
+        "mean": 79417.3333,
+        "stddev": 38166.5565,
+        "min": 45643,
+        "max": 120823
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.9167,
+        "stddev": 0.1443,
+        "min": 0.75,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 115.4,
+        "stddev": 86.1204,
+        "min": 21.3,
+        "max": 190.3
+      },
+      "tokens": {
+        "mean": 93558.6667,
+        "stddev": 48470.3819,
+        "min": 47038,
+        "max": 143768
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.00",
+      "time_seconds": "+14.2",
+      "tokens": "+14970"
+    }
+  },
+  "notes": [
+    "All 9 runs pass the same assertions except 'answer \u2264120 words' on the simple question, which all three configs fail: assertions do not discriminate between configurations.",
+    "CI-plan answers cite no file:line refs, so the 'no fabricated evidence' check is vacuous there; kit-audit answers cite 11-22 refs, all real.",
+    "N=1 per cell: time/token differences are indicative only.",
+    "Qualitative: all three kit audits caught the real PROTOCOL_AGENTS_ROOT-overrides-self-test bug; the skill did not change what was found."
+  ]
+}
